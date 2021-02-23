@@ -4,7 +4,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
 
   def index
     @lunches = policy_scope(Lunch)
-    find_country
+    fetch_yelp("Arlon",10_000,3)
   end
 
   def show
@@ -51,10 +51,10 @@ class Api::V1::LunchesController < Api::V1::BaseController
       status: :unprocessable_entity
   end
 
-
-
-  def find_country
-    url = "https://api.yelp.com/v3/autocomplete?text=del&latitude=37.786882&longitude=-122.399972"
+  def fetch_yelp(loc,dist,pr)
+    default="Restaurants"
+    country ="BE"
+    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{default}"
     api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
     response = Excon.get(url, :headers => {'Authorization' => 'Bearer api_key'})
     p "hello"
