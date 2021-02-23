@@ -4,6 +4,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
 
   def index
     @lunches = policy_scope(Lunch)
+    find_country
   end
 
   def show
@@ -48,6 +49,18 @@ class Api::V1::LunchesController < Api::V1::BaseController
   def render_error
     render json: { errors: @lunch.errors.full_messages },
       status: :unprocessable_entity
+  end
+
+
+
+  def find_country
+    url = "https://api.yelp.com/v3/autocomplete?text=del&latitude=37.786882&longitude=-122.399972"
+    api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
+    response = Excon.get(url, :headers => {'Authorization' => 'Bearer api_key'})
+    p "hello"
+    @body = JSON.parse(response.body)
+    p @body
+    p "bye bye"
   end
 
 end

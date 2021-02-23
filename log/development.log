@@ -666,3 +666,46 @@ Processing by Api::V1::LunchesController#index as JSON
 Completed 200 OK in 11ms (Views: 4.8ms | ActiveRecord: 3.9ms | Allocations: 7858)
 
 
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 17:35:38 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#index as JSON
+Completed 500 Internal Server Error in 8ms (ActiveRecord: 0.0ms | Allocations: 2937)
+
+
+  
+TypeError (no implicit conversion of Symbol into Integer):
+  
+app/controllers/api/v1/lunches_controller.rb:59:in `find_country'
+app/controllers/api/v1/lunches_controller.rb:7:in `index'
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 17:36:16 +0000
+Processing by Api::V1::LunchesController#index as JSON
+Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms | Allocations: 3181)
+
+
+  
+NoMethodError (undefined method `merge' for #<String:0x000055727289f820>):
+  
+app/controllers/api/v1/lunches_controller.rb:59:in `find_country'
+app/controllers/api/v1/lunches_controller.rb:7:in `index'
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 17:37:00 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (115.23ms)  GET https://api.yelp.com/v3/autocomplete?text=del&latitude=37.786882&longitude=-122.399972[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m200 OK (302 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.5ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 8.4ms | Allocations: 5978)
+Completed 200 OK in 374ms (Views: 5.2ms | ActiveRecord: 3.6ms | Excon: 115.2ms | Allocations: 21503)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:08:28 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (79.22ms)  GET https://api.yelp.com/v3/autocomplete?text=del&latitude=37.786882&longitude=-122.399972[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.5ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 5.3ms | Allocations: 5246)
+Completed 200 OK in 272ms (Views: 5.2ms | ActiveRecord: 0.5ms | Excon: 79.2ms | Allocations: 13268)
+
+
