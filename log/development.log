@@ -709,3 +709,75 @@ Processing by Api::V1::LunchesController#index as JSON
 Completed 200 OK in 272ms (Views: 5.2ms | ActiveRecord: 0.5ms | Excon: 79.2ms | Allocations: 13268)
 
 
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:37:11 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (86.69ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=10000&price=3&categories%22Restaurants%22[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.5ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 15.6ms | Allocations: 6081)
+Completed 200 OK in 290ms (Views: 14.0ms | ActiveRecord: 3.5ms | Excon: 86.7ms | Allocations: 17906)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:39:41 +0000
+Processing by Api::V1::LunchesController#index as JSON
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms | Allocations: 4004)
+
+
+  
+NameError (uninitialized constant Api::V1::LunchesController::Arlon):
+  
+app/controllers/api/v1/lunches_controller.rb:7:in `index'
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:40:36 +0000
+Processing by Api::V1::LunchesController#index as JSON
+Completed 500 Internal Server Error in 5ms (ActiveRecord: 0.0ms | Allocations: 3993)
+
+
+  
+NameError (uninitialized constant Api::V1::LunchesController::Arlon):
+  
+app/controllers/api/v1/lunches_controller.rb:7:in `index'
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:40:48 +0000
+Processing by Api::V1::LunchesController#index as JSON
+Completed 500 Internal Server Error in 6ms (ActiveRecord: 0.0ms | Allocations: 3993)
+
+
+  
+NameError (uninitialized constant Api::V1::LunchesController::Arlon):
+  
+app/controllers/api/v1/lunches_controller.rb:7:in `index'
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:41:51 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (95.95ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=10000&price=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (187 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 9.8ms | Allocations: 5418)
+Completed 200 OK in 330ms (Views: 8.1ms | ActiveRecord: 2.3ms | Excon: 96.0ms | Allocations: 13447)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:42:20 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (83.59ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=10000&price=3&categories=Restaurants[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (187 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.4ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 11.7ms | Allocations: 5377)
+Completed 200 OK in 266ms (Views: 8.8ms | ActiveRecord: 3.7ms | Excon: 83.6ms | Allocations: 13397)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-23 18:43:50 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  [1m[34mExcon Request[0m (105.94ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=10000&price=3&categories=Restaurants[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (187 Bytes)[0m
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 10.7ms | Allocations: 5369)
+Completed 200 OK in 299ms (Views: 8.3ms | ActiveRecord: 3.0ms | Excon: 106.0ms | Allocations: 13120)
+
+
