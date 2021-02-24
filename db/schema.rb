@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_153506) do
+ActiveRecord::Schema.define(version: 2021_02_24_134452) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,17 @@ ActiveRecord::Schema.define(version: 2021_02_23_153506) do
     t.index ["user_id"], name: "index_preferences_on_user_id"
   end
 
+  create_table "restaurants", force: :cascade do |t|
+    t.string "restaurant_name"
+    t.string "restaurant_price"
+    t.string "restaurant_city"
+    t.string "restaurant_category"
+    t.bigint "lunch_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lunch_id"], name: "index_restaurants_on_lunch_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -61,4 +72,5 @@ ActiveRecord::Schema.define(version: 2021_02_23_153506) do
   add_foreign_key "lunch_preferences", "preferences"
   add_foreign_key "lunches", "users"
   add_foreign_key "preferences", "users"
+  add_foreign_key "restaurants", "lunches"
 end
