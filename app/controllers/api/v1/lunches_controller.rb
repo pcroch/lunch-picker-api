@@ -62,7 +62,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
   def lunch_params
-    params.require(:lunch).permit(:localisation, :distance, attendees: [], price: [])# , attendees: []
+    params.require(:lunch).permit(:localisation, :distance, attendees: [], price: [])
   end
 
   def render_error
