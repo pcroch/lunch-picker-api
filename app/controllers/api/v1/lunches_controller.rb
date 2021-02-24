@@ -20,17 +20,29 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
   def create
-    hash_params = {
+    @hash_params = {
       localisation: lunch_params["localisation"],
       distance: lunch_params["distance"],
       price: lunch_params["price"],
-      attendees: lunch_params["attendees"]
+      taste: nil
     }
-    # binding.pry
+
+    matching_preferences
+    choice_count
+
+
+
+
+
+
+
+
+
     fetch_yelp(
-      hash_params[:localisation],
-      hash_params[:distance],
-      hash_params[:price]
+      @hash_params[:localisation],
+      @hash_params[:distance],
+      @hash_params[:price][0],
+      @hash_params[:taste]
     )
 
     @lunch = Lunch.new(
@@ -70,10 +82,35 @@ class Api::V1::LunchesController < Api::V1::BaseController
       status: :unprocessable_entity
   end
 
-  def fetch_yelp(loc,dist,pr)
-    default="Restaurants"
+  def matching_preferences
+    i = 0
+    j = lunch_params['attendees'].count
+    @preferences = []
+    while i < j
+
+      # find the name in the params for i
+      name = lunch_params['attendees'][i]
+      # find the name of the user in preference for i
+      tmp = Preference.where(name: name)[0][:taste]
+      # creating a temporary varaible to create an array to sock the preferences
+      tmp.each { |string| @preferences.append(string) }
+      # creating the hash that will count the number of ocurance for each movie category
+      @counts = Hash.new(0)
+      # create an has: count with the number of ocurance for each movie category
+      @counts = @preferences.each_with_object(Hash.new(0)) { |e, total| total[e] += 1 }
+      i += 1
+    end
+  end
+
+  def choice_count
+    choice = @counts.max_by { |_k, v| v }
+    @hash_params[:taste] = choice
+  end
+
+  def fetch_yelp(loc,dist,pr,tas = "Restaurants")
+    # default="Restaurants"
     country ="BE"
-    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{default}"
+    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{tas}"
     api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
     response = Excon.get(url, :headers => {'Authorization' => 'Bearer api_key'})
     p "hello"
