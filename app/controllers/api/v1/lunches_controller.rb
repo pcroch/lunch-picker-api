@@ -22,18 +22,25 @@ class Api::V1::LunchesController < Api::V1::BaseController
   def create
     @hash_params = {
       localisation: lunch_params["localisation"],
-      distance: lunch_params["distance"],
+      distance: lunch_params["distance"] * 1000,
       price: lunch_params["price"],
       taste: nil
     }
 
+    # price
+    price_min = lunch_params["price"].min
+    price_max = lunch_params["price"].max
+    @hash_params[:price] = [*price_min..price_max].join(',')
+
+
+# binding.pry
     matching_preferences
     choice_count
 
     fetch_yelp(
       @hash_params[:localisation],
       @hash_params[:distance],
-      @hash_params[:price][0],
+      @hash_params[:price],
       @hash_params[:taste]
     )
 
@@ -95,7 +102,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
             'restaurant_name' => @body['businesses'][i]['name'],
             'restaurant_price' => @body['businesses'][i]['price'],
             'restaurant_city' => @body['businesses'][i]['location']['city'],
-            'restaurant_category' => @body['businesses'][i]['categories'][0]['title']
+            'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
             })
         restaurant.save
         i += 1
@@ -127,15 +134,16 @@ class Api::V1::LunchesController < Api::V1::BaseController
 
   def choice_count
     choice = @counts.max_by { |_k, v| v }
-    @hash_params[:taste] = choice[1]
+    @hash_params[:taste] = choice[0].downcase
+     # binding.pry
   end
 
-  def fetch_yelp(loc,dist,pr,tas = "Restaurants")
+  def fetch_yelp(loc,dist,pr,cat = "Restaurants")
     # default="Restaurants"
     country ="BE"
-    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{tas}"
+    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
     api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
-
+# binding.pry
     response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
     p "hello body"
     @body = JSON.parse(response.body)
