@@ -30,14 +30,6 @@ class Api::V1::LunchesController < Api::V1::BaseController
     matching_preferences
     choice_count
 
-
-
-
-
-
-
-
-
     fetch_yelp(
       @hash_params[:localisation],
       @hash_params[:distance],
@@ -147,7 +139,6 @@ class Api::V1::LunchesController < Api::V1::BaseController
     response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
     p "hello body"
     @body = JSON.parse(response.body)
-    # binding.pry
     p @body
     p "bye bye body"
   end
