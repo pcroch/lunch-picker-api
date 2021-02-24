@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_153506) do
 
   create_table "preferences", force: :cascade do |t|
     t.string "name"
-    t.text "task", default: [], array: true
+    t.text "taste", default: [], array: true
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
