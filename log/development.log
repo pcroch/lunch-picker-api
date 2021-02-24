@@ -1517,3 +1517,1233 @@ Processing by Api::V1::LunchesController#create as JSON
 Completed 201 Created in 310ms (Views: 0.6ms | ActiveRecord: 13.0ms | Excon: 99.6ms | Allocations: 31477)
 
 
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(107090900610847650)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateRestaurants (20210224134452)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (13.1ms)[0m  [1m[35mCREATE TABLE "restaurants" ("id" bigserial primary key, "restaurant_name" character varying, "restaurant_price" character varying, "restaurant_city" character varying, "restaurant_category" character varying, "lunch_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_1d01fff5ba"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_restaurants_on_lunch_id" ON "restaurants"  ("lunch_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210224134452"]]
+  [1m[35m (1.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(107090900610847650)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:52:37 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[34mExcon Request[0m (5125.87ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.6ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:52:43.141881"], ["updated_at", "2021-02-24 13:52:43.141881"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.6ms | Allocations: 264)
+Completed 201 Created in 5378ms (Views: 2.1ms | ActiveRecord: 18.0ms | Excon: 5125.9ms | Allocations: 37180)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:53:00 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+Completed 500 Internal Server Error in 168ms (ActiveRecord: 4.5ms | Allocations: 132409)
+
+
+  
+NameError (undefined local variable or method `empty_request' for #<Api::V1::LunchesController:0x000055a417ca7e00>
+Did you mean?  set_request!):
+  
+app/controllers/api/v1/lunches_controller.rb:89:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:32:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:53:23 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:122:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:122:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:122:in `matching_preferences'
+  [1m[34mExcon Request[0m (80.29ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.3ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:53:23.427552"], ["updated_at", "2021-02-24 13:53:23.427552"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+Completed 500 Internal Server Error in 297ms (ActiveRecord: 8.6ms | Excon: 80.3ms | Allocations: 31211)
+
+
+  
+NoMethodError (undefined method `count' for nil:NilClass):
+  
+app/controllers/api/v1/lunches_controller.rb:89:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:57:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:54:21 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (98.01ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:54:21.576075"], ["updated_at", "2021-02-24 13:54:21.576075"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+Completed 500 Internal Server Error in 85819ms (ActiveRecord: 9.8ms | Excon: 98.0ms | Allocations: 408403)
+
+
+  
+NoMethodError (undefined method `count' for nil:NilClass):
+  
+app/controllers/api/v1/lunches_controller.rb:92:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:57:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:55:53 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (128.55ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.6ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:55:54.092607"], ["updated_at", "2021-02-24 13:55:54.092607"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+Completed 500 Internal Server Error in 43735ms (ActiveRecord: 17.0ms | Excon: 128.6ms | Allocations: 524596)
+
+
+  
+NoMethodError (undefined method `count' for nil:NilClass):
+  
+app/controllers/api/v1/lunches_controller.rb:92:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:57:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:56:41 +0000
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (73.13ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.5ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:56:41.655948"], ["updated_at", "2021-02-24 13:56:41.655948"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+Completed 500 Internal Server Error in 84980ms (ActiveRecord: 8.7ms | Excon: 73.1ms | Allocations: 1825168)
+
+
+  
+NoMethodError (undefined method `count' for nil:NilClass):
+  
+app/controllers/api/v1/lunches_controller.rb:92:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:57:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:58:12 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.5ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.3ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (79.13ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=[%22Italian%22,%203][0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.8ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 13:58:54.626373"], ["updated_at", "2021-02-24 13:58:54.626373"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.7ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.647927"], ["updated_at", "2021-02-24 13:58:54.647927"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.4ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.654736"], ["updated_at", "2021-02-24 13:58:54.654736"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.661127"], ["updated_at", "2021-02-24 13:58:54.661127"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.667630"], ["updated_at", "2021-02-24 13:58:54.667630"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.673964"], ["updated_at", "2021-02-24 13:58:54.673964"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.680267"], ["updated_at", "2021-02-24 13:58:54.680267"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.686687"], ["updated_at", "2021-02-24 13:58:54.686687"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.692938"], ["updated_at", "2021-02-24 13:58:54.692938"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.699211"], ["updated_at", "2021-02-24 13:58:54.699211"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 10], ["created_at", "2021-02-24 13:58:54.705472"], ["updated_at", "2021-02-24 13:58:54.705472"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 11.7ms | Allocations: 262)
+Completed 500 Internal Server Error in 42209ms (Views: 14.1ms | ActiveRecord: 29.2ms | Excon: 79.1ms | Allocations: 226984)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/api/v1/lunches_controller.rb:58:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 13:59:23 +0000
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (106.61ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.21ms)  [1m200 OK (9.63 KB)[0m
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:04:01 +0000
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.7ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:04:07.419017"], ["updated_at", "2021-02-24 14:04:07.419017"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (7.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.5ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.438946"], ["updated_at", "2021-02-24 14:04:07.438946"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.442849"], ["updated_at", "2021-02-24 14:04:07.442849"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.446889"], ["updated_at", "2021-02-24 14:04:07.446889"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.452535"], ["updated_at", "2021-02-24 14:04:07.452535"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.458061"], ["updated_at", "2021-02-24 14:04:07.458061"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.463974"], ["updated_at", "2021-02-24 14:04:07.463974"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.469494"], ["updated_at", "2021-02-24 14:04:07.469494"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.474781"], ["updated_at", "2021-02-24 14:04:07.474781"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.480135"], ["updated_at", "2021-02-24 14:04:07.480135"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 11], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3) RETURNING "id"[0m  [["lunch_id", 11], ["created_at", "2021-02-24 14:04:07.485578"], ["updated_at", "2021-02-24 14:04:07.485578"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.6ms | Allocations: 262)
+Completed 500 Internal Server Error in 283910ms (Views: 2.6ms | ActiveRecord: 30.0ms | Excon: 106.8ms | Allocations: 4371114)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/api/v1/lunches_controller.rb:58:in `create'
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (76.76ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:04:08.485567"], ["updated_at", "2021-02-24 14:04:08.485567"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.505703"], ["updated_at", "2021-02-24 14:04:08.505703"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.511738"], ["updated_at", "2021-02-24 14:04:08.511738"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.517773"], ["updated_at", "2021-02-24 14:04:08.517773"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.523668"], ["updated_at", "2021-02-24 14:04:08.523668"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.529529"], ["updated_at", "2021-02-24 14:04:08.529529"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.535821"], ["updated_at", "2021-02-24 14:04:08.535821"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.541778"], ["updated_at", "2021-02-24 14:04:08.541778"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.547503"], ["updated_at", "2021-02-24 14:04:08.547503"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.1ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.551540"], ["updated_at", "2021-02-24 14:04:08.551540"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 12], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.1ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 12], ["created_at", "2021-02-24 14:04:08.554869"], ["updated_at", "2021-02-24 14:04:08.554869"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.1ms | Allocations: 84)
+Completed 500 Internal Server Error in 899ms (Views: 0.5ms | ActiveRecord: 24.3ms | Excon: 76.8ms | Allocations: 78428)
+
+
+  
+AbstractController::DoubleRenderError (Render and/or redirect were called multiple times in this action. Please note that you may only call render OR redirect, and at most once per action. Also note that neither redirect nor render terminate execution of the action, so if you want to exit an action after redirecting, you need to do something like "redirect_to(...) and return".):
+  
+app/controllers/api/v1/lunches_controller.rb:58:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:04:41 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (81.29ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:04:42.359341"], ["updated_at", "2021-02-24 14:04:42.359341"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (1.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.379885"], ["updated_at", "2021-02-24 14:04:42.379885"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.400426"], ["updated_at", "2021-02-24 14:04:42.400426"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.406442"], ["updated_at", "2021-02-24 14:04:42.406442"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.412295"], ["updated_at", "2021-02-24 14:04:42.412295"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.418209"], ["updated_at", "2021-02-24 14:04:42.418209"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.424212"], ["updated_at", "2021-02-24 14:04:42.424212"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.430174"], ["updated_at", "2021-02-24 14:04:42.430174"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.436003"], ["updated_at", "2021-02-24 14:04:42.436003"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.441802"], ["updated_at", "2021-02-24 14:04:42.441802"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 13], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 13], ["created_at", "2021-02-24 14:04:42.447618"], ["updated_at", "2021-02-24 14:04:42.447618"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.2ms | Allocations: 84)
+Completed 201 Created in 698ms (Views: 1.0ms | ActiveRecord: 25.0ms | Excon: 81.3ms | Allocations: 77296)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:09:57 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (5084.02ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:10:03.368795"], ["updated_at", "2021-02-24 14:10:03.368795"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.376727"], ["updated_at", "2021-02-24 14:10:03.376727"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.383049"], ["updated_at", "2021-02-24 14:10:03.383049"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.389291"], ["updated_at", "2021-02-24 14:10:03.389291"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.395665"], ["updated_at", "2021-02-24 14:10:03.395665"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.400432"], ["updated_at", "2021-02-24 14:10:03.400432"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.404898"], ["updated_at", "2021-02-24 14:10:03.404898"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.410920"], ["updated_at", "2021-02-24 14:10:03.410920"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.417191"], ["updated_at", "2021-02-24 14:10:03.417191"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.423309"], ["updated_at", "2021-02-24 14:10:03.423309"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 14], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 14], ["created_at", "2021-02-24 14:10:03.429360"], ["updated_at", "2021-02-24 14:10:03.429360"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 2.5ms | Allocations: 1319)
+Completed 500 Internal Server Error in 5634ms (ActiveRecord: 14.7ms | Excon: 5084.0ms | Allocations: 55431)
+
+
+  
+ActionView::Template::Error (undefined method `restaurants' for nil:NilClass):
+    1: # json.cache! ['finders'], expires_in: 1.minutes do |json|
+    2:   json.extract! @lunch, :id, :localisation, :distance, :price
+    3: 
+    4:   json.restaurants @finder.restaurants do |restaurant|
+    5:     json.extract! restaurant, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+    6:   end
+    7: # end
+  
+app/views/api/v1/lunches/show.json.jbuilder:4
+app/controllers/api/v1/lunches_controller.rb:111:in `upper_limit'
+app/controllers/api/v1/lunches_controller.rb:57:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:10:35 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (98.13ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:10:36.163721"], ["updated_at", "2021-02-24 14:10:36.163721"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.175937"], ["updated_at", "2021-02-24 14:10:36.175937"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.182002"], ["updated_at", "2021-02-24 14:10:36.182002"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.186579"], ["updated_at", "2021-02-24 14:10:36.186579"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.189992"], ["updated_at", "2021-02-24 14:10:36.189992"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.193560"], ["updated_at", "2021-02-24 14:10:36.193560"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.203629"], ["updated_at", "2021-02-24 14:10:36.203629"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.207217"], ["updated_at", "2021-02-24 14:10:36.207217"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.210968"], ["updated_at", "2021-02-24 14:10:36.210968"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.214372"], ["updated_at", "2021-02-24 14:10:36.214372"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 15], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 15], ["created_at", "2021-02-24 14:10:36.217870"], ["updated_at", "2021-02-24 14:10:36.217870"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 15]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 9.6ms | Allocations: 6585)
+Completed 201 Created in 623ms (Views: 9.9ms | ActiveRecord: 19.9ms | Excon: 98.1ms | Allocations: 61181)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:11:13 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (5090.13ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:11:34.990196"], ["updated_at", "2021-02-24 14:11:34.990196"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.012655"], ["updated_at", "2021-02-24 14:11:35.012655"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.018972"], ["updated_at", "2021-02-24 14:11:35.018972"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.1ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.024355"], ["updated_at", "2021-02-24 14:11:35.024355"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.029702"], ["updated_at", "2021-02-24 14:11:35.029702"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.035285"], ["updated_at", "2021-02-24 14:11:35.035285"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.042007"], ["updated_at", "2021-02-24 14:11:35.042007"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.046358"], ["updated_at", "2021-02-24 14:11:35.046358"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.050756"], ["updated_at", "2021-02-24 14:11:35.050756"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.053945"], ["updated_at", "2021-02-24 14:11:35.053945"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 16], ["created_at", "2021-02-24 14:11:35.057297"], ["updated_at", "2021-02-24 14:11:35.057297"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 1.8ms | Allocations: 2526)
+Completed 201 Created in 21774ms (Views: 2.1ms | ActiveRecord: 23.3ms | Excon: 5090.1ms | Allocations: 236000)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:11:46 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (71.95ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.3ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:11:46.991130"], ["updated_at", "2021-02-24 14:11:46.991130"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.018356"], ["updated_at", "2021-02-24 14:11:47.018356"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.024290"], ["updated_at", "2021-02-24 14:11:47.024290"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Restaurants"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.030487"], ["updated_at", "2021-02-24 14:11:47.030487"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Greek"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.036779"], ["updated_at", "2021-02-24 14:11:47.036779"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Bakeries"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.043809"], ["updated_at", "2021-02-24 14:11:47.043809"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Irish Pub"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.049557"], ["updated_at", "2021-02-24 14:11:47.049557"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Restaurants"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.055308"], ["updated_at", "2021-02-24 14:11:47.055308"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Bakeries"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.060944"], ["updated_at", "2021-02-24 14:11:47.060944"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Chinese"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.066523"], ["updated_at", "2021-02-24 14:11:47.066523"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 17], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Bars"], ["lunch_id", 17], ["created_at", "2021-02-24 14:11:47.071483"], ["updated_at", "2021-02-24 14:11:47.071483"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 17]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 2.2ms | Allocations: 2527)
+Completed 201 Created in 590ms (Views: 2.4ms | ActiveRecord: 30.1ms | Excon: 72.0ms | Allocations: 79459)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:12:14 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (67.74ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 14:13:40 +0000
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:13:48.371250"], ["updated_at", "2021-02-24 14:13:48.371250"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.396900"], ["updated_at", "2021-02-24 14:13:48.396900"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_category", "Belgian"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.403216"], ["updated_at", "2021-02-24 14:13:48.403216"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_category", "Restaurants"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.409110"], ["updated_at", "2021-02-24 14:13:48.409110"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_category", "Greek"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.415095"], ["updated_at", "2021-02-24 14:13:48.415095"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_category", "Bakeries"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.421134"], ["updated_at", "2021-02-24 14:13:48.421134"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_category", "Irish Pub"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.426889"], ["updated_at", "2021-02-24 14:13:48.426889"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_category", "Restaurants"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.433169"], ["updated_at", "2021-02-24 14:13:48.433169"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_category", "Bakeries"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.439203"], ["updated_at", "2021-02-24 14:13:48.439203"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.4ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_category", "Chinese"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.445184"], ["updated_at", "2021-02-24 14:13:48.445184"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 18], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_category", "Bars"], ["lunch_id", 18], ["created_at", "2021-02-24 14:13:48.451020"], ["updated_at", "2021-02-24 14:13:48.451020"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 18]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 3.2ms | Allocations: 2529)
+Completed 201 Created in 93814ms (Views: 3.6ms | ActiveRecord: 31.9ms | Excon: 67.8ms | Allocations: 872604)
+
+
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>35000, "price"=>[2], "attendees"=>["Pierre", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:125:in `matching_preferences'
+  [1m[34mExcon Request[0m (98.63ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=35000&price=2&categories=3[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (9.63 KB)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[36mLunch Create (0.3ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "35000"], ["price", "{2}"], ["user_id", 1], ["created_at", "2021-02-24 14:13:49.207670"], ["updated_at", "2021-02-24 14:13:49.207670"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:56:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Belgian"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.232017"], ["updated_at", "2021-02-24 14:13:49.232017"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Belgian"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.237842"], ["updated_at", "2021-02-24 14:13:49.237842"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Geppetto"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Restaurants"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.243441"], ["updated_at", "2021-02-24 14:13:49.243441"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Zorba le Grec"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Greek"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.248946"], ["updated_at", "2021-02-24 14:13:49.248946"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.4ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Van De Kerckhove/E."], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Bakeries"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.254383"], ["updated_at", "2021-02-24 14:13:49.254383"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Soho"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Irish Pub"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.260196"], ["updated_at", "2021-02-24 14:13:49.260196"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Kalinka"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Restaurants"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.265810"], ["updated_at", "2021-02-24 14:13:49.265810"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Evrard/Claude"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Bakeries"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.271530"], ["updated_at", "2021-02-24 14:13:49.271530"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "La Corne d'Abondance"], ["restaurant_price", "€€"], ["restaurant_city", "Athus"], ["restaurant_category", "Chinese"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.277063"], ["updated_at", "2021-02-24 14:13:49.277063"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 19], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "La Marmite Ukrainienne"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "Bars"], ["lunch_id", 19], ["created_at", "2021-02-24 14:13:49.282736"], ["updated_at", "2021-02-24 14:13:49.282736"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:108:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 19]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 3.3ms | Allocations: 2596)
+Completed 201 Created in 772ms (Views: 3.8ms | ActiveRecord: 30.7ms | Excon: 98.6ms | Allocations: 80943)
+
+

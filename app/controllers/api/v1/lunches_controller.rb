@@ -54,7 +54,8 @@ class Api::V1::LunchesController < Api::V1::BaseController
     @lunch.user = current_user
     authorize @lunch
     if @lunch.save
-      render :show, status: :created
+      upper_limit
+      # render :show, status: :created
     else
       render_error
     end
@@ -82,6 +83,36 @@ class Api::V1::LunchesController < Api::V1::BaseController
       status: :unprocessable_entity
   end
 
+
+  def upper_limit
+
+
+
+    # validation if empty of nil to avoid to crash the api
+    if @body.nil? || @body['businesses'].count.zero?
+      empty_request # call emtpy request method in parent
+    else
+      # selecting a maximum of 10 movies or less
+      @body['businesses'].count < 10 ? (upper_limit = @body['businesses'].count) : (upper_limit = 10)
+      i = 0
+      # while i < 10
+      while i < upper_limit
+
+        restaurant = Restaurant.new({
+            'lunch_id' => @lunch.id,
+            'restaurant_name' => @body['businesses'][i]['name'],
+            'restaurant_price' => @body['businesses'][i]['price'],
+            'restaurant_city' => @body['businesses'][i]['location']['city'],
+            'restaurant_category' => @body['businesses'][i]['categories'][0]['title']
+            })
+        restaurant.save
+        i += 1
+      end
+      render :show, status: :created
+    end
+  end
+
+
   def matching_preferences
     i = 0
     j = lunch_params['attendees'].count
@@ -104,7 +135,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
 
   def choice_count
     choice = @counts.max_by { |_k, v| v }
-    @hash_params[:taste] = choice
+    @hash_params[:taste] = choice[1]
   end
 
   def fetch_yelp(loc,dist,pr,tas = "Restaurants")
@@ -112,11 +143,13 @@ class Api::V1::LunchesController < Api::V1::BaseController
     country ="BE"
     url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{tas}"
     api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
-    response = Excon.get(url, :headers => {'Authorization' => 'Bearer api_key'})
-    p "hello"
+
+    response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
+    p "hello body"
     @body = JSON.parse(response.body)
+    # binding.pry
     p @body
-    p "bye bye"
+    p "bye bye body"
   end
 
 end
