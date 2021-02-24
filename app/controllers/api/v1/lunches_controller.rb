@@ -33,10 +33,17 @@ class Api::V1::LunchesController < Api::V1::BaseController
     @hash_params[:price] = [*price_min..price_max].join(',')
 
 
+
 # binding.pry
     matching_preferences
     choice_count
 
+           fetch_yelp(
+      @hash_params[:localisation],
+      @hash_params[:distance],
+      @hash_params[:price],
+      @hash_params[:taste]
+    )
 
 
     @lunch = Lunch.new(
@@ -78,14 +85,6 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
 def upper_limit
-       fetch_yelp(
-      @hash_params[:localisation],
-      @hash_params[:distance],
-      @hash_params[:price],
-      @hash_params[:taste]
-    )
-
-
     # validation if empty of nil to avoid to crash the api
     if @body.nil? || @body['businesses'].count.zero?
       empty_request # call emtpy request method in parent
@@ -199,24 +198,29 @@ def upper_limit
   end
 
   def fetch_yelp(loc,dist,pr,cat = "Restaurants")
-    # default="Restaurants"
-    country ="BE"
-    url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
-    api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
-# binding.pry
-    response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
-    p "hello body"
-    @body = JSON.parse(response.body)
-    p @body
-    p "bye bye body"
+# response.status != 200
+      country ="BE"
+      url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
+      api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
+  # binding.pry
+      response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
+      @body = JSON.parse(response.body)
+      if response.status == 200
+        if @body['businesses'].count < 10
+            fetch_yelp(loc,dist*10,pr,cat)
+        end
+      else
+        # fetch_yelp(loc,dist/10,pr,cat)
+        country ="BE"
+      url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist/10}&price=#{pr}&categories=#{cat}"
+      api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
+  # binding.pry
+      response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
+      @body = JSON.parse(response.body)
 
-    # @body['businesses'].count < 10 ? fetch_yelp(loc,dist,pr,cat = "Restaurants") : (upper_limit = 10)
-    if @body['businesses'].count < 10
+      end
 
-            fetch_yelp(loc,dist*10,pr,cat = "Restaurants")
-    end
+end
 
-
-  end
 
 end
