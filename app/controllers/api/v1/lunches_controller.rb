@@ -1,10 +1,11 @@
+require 'pry'
 class Api::V1::LunchesController < Api::V1::BaseController
   acts_as_token_authentication_handler_for User, except: [ :index, :show ]
   before_action :set_lunch, only: [ :show, :update , :destroy]
 
   def index
     @lunches = policy_scope(Lunch)
-    fetch_yelp("Arlon",10_000,3)
+
   end
 
   def show
@@ -19,6 +20,19 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
   def create
+    hash_params = {
+      localisation: lunch_params["localisation"],
+      distance: lunch_params["distance"],
+      price: lunch_params["price"],
+      attendees: lunch_params["attendees"]
+    }
+    # binding.pry
+    fetch_yelp(
+      hash_params[:localisation],
+      hash_params[:distance],
+      hash_params[:price]
+    )
+
     @lunch = Lunch.new(lunch_params)
     @lunch.user = current_user
     authorize @lunch
