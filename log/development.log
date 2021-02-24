@@ -8484,3 +8484,940 @@ Processing by Api::V1::LunchesController#create as JSON
 Completed 201 Created in 1288ms (Views: 3.7ms | ActiveRecord: 15.6ms | Excon: 235.2ms | Allocations: 41709)
 
 
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 18:04:08 +0000
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>38000, "price"=>[1, 4], "attendees"=>["Sam", "Gilles", "Vince"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Sam"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:182:in `matching_preferences'
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Gilles"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:182:in `matching_preferences'
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Vince"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:182:in `matching_preferences'
+  [1m[34mExcon Request[0m (115.49ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=38000&price=1,2,3,4&categories=belgian[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m200 OK (2.86 KB)[0m
+  [1m[34mExcon Request[0m (90.42ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=380000&price=1,2,3,4&categories=belgian[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (140 Bytes)[0m
+  [1m[34mExcon Request[0m (103.42ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=38000&price=1,2,3,4&categories=belgian[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m200 OK (2.86 KB)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[36mLunch Create (0.6ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "38000"], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-24 18:04:10.522014"], ["updated_at", "2021-02-24 18:04:10.522014"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 77], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.4ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Hostellerie du Peiffeschof"], ["restaurant_price", "€€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "hotels"], ["lunch_id", 77], ["created_at", "2021-02-24 18:04:10.543986"], ["updated_at", "2021-02-24 18:04:10.543986"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 77], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Le fils de Paul"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "belgian"], ["lunch_id", 77], ["created_at", "2021-02-24 18:04:10.553650"], ["updated_at", "2021-02-24 18:04:10.553650"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 77], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Faubourg 101"], ["restaurant_price", "€€"], ["restaurant_city", "Arlon"], ["restaurant_category", "belgian"], ["lunch_id", 77], ["created_at", "2021-02-24 18:04:10.566319"], ["updated_at", "2021-02-24 18:04:10.566319"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 77]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 9.4ms | Allocations: 2826)
+Completed 201 Created in 1563ms (Views: 13.0ms | ActiveRecord: 24.4ms | Excon: 309.4ms | Allocations: 71446)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:41:24 +0000
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.4ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 458.4ms | Allocations: 359420)
+Completed 500 Internal Server Error in 470ms (ActiveRecord: 2.3ms | Allocations: 363688)
+
+
+  
+ActionView::Template::Error (undefined local variable or method `finder' for #<#<Class:0x000055972d773700>:0x000055972d770938>):
+    1: json.array! @lunches do |lunch|
+    2:   json.extract! lunch, :id, :localisation, :distance, :price
+    3:   json.movies finder.movies, :title, :overview, :vote_average
+    4: end
+    5: 
+    6: 
+  
+app/views/api/v1/lunches/index.json.jbuilder:3
+app/views/api/v1/lunches/index.json.jbuilder:1
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:42:50 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 0.7ms | Allocations: 1034)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 1746)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template: check json.array! @lunches do |lunch|
+  json.extract! lunch, :id, :localisation, :distance, :price
+  json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+  end
+# end
+
+end
+
+
+
+# resturent title, taste and price?
+
+):
+1:    json.array! @lunches do |lunch|
+2:      json.extract! lunch, :id, :localisation, :distance, :price
+3:      json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+4:      end
+5:    # end
+6:    
+7:    end
+8:    
+9:    
+10:    
+11:    # resturent title, taste and price?
+  
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:42:51 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 0.6ms | Allocations: 1010)
+Completed 500 Internal Server Error in 1ms (ActiveRecord: 0.0ms | Allocations: 1408)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template: check json.array! @lunches do |lunch|
+  json.extract! lunch, :id, :localisation, :distance, :price
+  json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+  end
+# end
+
+end
+
+
+
+# resturent title, taste and price?
+
+):
+1:    json.array! @lunches do |lunch|
+2:      json.extract! lunch, :id, :localisation, :distance, :price
+3:      json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+4:      end
+5:    # end
+6:    
+7:    end
+8:    
+9:    
+10:    
+11:    # resturent title, taste and price?
+  
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:42:52 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 0.6ms | Allocations: 1010)
+Completed 500 Internal Server Error in 2ms (ActiveRecord: 0.0ms | Allocations: 1408)
+
+
+  
+ActionView::SyntaxErrorInTemplate (Encountered a syntax error while rendering template: check json.array! @lunches do |lunch|
+  json.extract! lunch, :id, :localisation, :distance, :price
+  json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+  end
+# end
+
+end
+
+
+
+# resturent title, taste and price?
+
+):
+1:    json.array! @lunches do |lunch|
+2:      json.extract! lunch, :id, :localisation, :distance, :price
+3:      json.restaurants lunch.restaurants, :restaurant_name, :restaurant_price, :restaurant_city, :restaurant_category
+4:      end
+5:    # end
+6:    
+7:    end
+8:    
+9:    
+10:    
+11:    # resturent title, taste and price?
+  
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+app/views/api/v1/lunches/index.json.jbuilder:14: syntax error, unexpected end, expecting end-of-input
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:43:24 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.4ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 2]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 3]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 4]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 5]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 6]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 7]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 8]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 9]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 10]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 11]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 12]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 13]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 14]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 15]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 17]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 18]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 19]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 20]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 21]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 22]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 23]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 24]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 25]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 26]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 27]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 28]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 29]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 30]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 31]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 32]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 33]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 34]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 35]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 36]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 37]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 38]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 39]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 40]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 41]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 42]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 43]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 44]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 45]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 46]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 47]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 48]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 49]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 50]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 51]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 52]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 53]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 54]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 55]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 56]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 57]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 58]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 59]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 60]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 61]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 62]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 63]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 64]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 65]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 66]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 67]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 68]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 69]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 70]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 71]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 72]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 73]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 74]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 75]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 76]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 77]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 111.6ms | Allocations: 115668)
+Completed 200 OK in 113ms (Views: 97.0ms | ActiveRecord: 15.1ms | Allocations: 116415)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:44:28 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 2]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 3]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 4]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 5]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.5ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 6]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 7]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 8]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 9]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 10]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 11]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 12]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 13]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 14]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 15]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 17]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 18]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 19]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 20]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 21]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 22]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 23]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 24]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 25]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 26]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 27]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 28]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 29]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 30]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 31]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 32]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 33]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 34]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 35]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 36]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 37]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 38]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 39]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 40]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 41]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 42]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 43]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 44]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 45]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 46]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 47]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 48]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 49]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 50]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 51]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 52]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 53]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 54]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 55]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 56]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 57]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 58]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 59]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 60]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 61]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 62]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 63]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 64]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 65]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 66]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 67]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 68]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 69]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 70]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 71]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 72]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 73]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 74]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 75]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 76]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.4ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 77]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 106.9ms | Allocations: 104229)
+Completed 200 OK in 108ms (Views: 95.1ms | ActiveRecord: 12.1ms | Allocations: 104657)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:45:14 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 2]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 3]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 4]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 5]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 6]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 7]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 8]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 9]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 10]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 11]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 12]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 13]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 14]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 15]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 17]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 18]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 19]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 20]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 21]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 22]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 23]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 24]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 25]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 26]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 27]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 28]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 29]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 30]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 31]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 32]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 33]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 34]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 35]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 36]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 37]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 38]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 39]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 40]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 41]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 42]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 43]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 44]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 45]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 46]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 47]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 48]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 49]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 50]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 51]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 52]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 53]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 54]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 55]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 56]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 57]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 58]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 59]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 60]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 61]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 62]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 63]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 64]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 65]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 66]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 67]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 68]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 69]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 70]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 71]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 72]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 73]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 74]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 75]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 76]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 77]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 74.8ms | Allocations: 104232)
+Completed 200 OK in 76ms (Views: 65.2ms | ActiveRecord: 9.9ms | Allocations: 104665)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 19:58:11 +0000
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.6ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  [1m[36mRestaurant Load (0.3ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 2]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 3]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 4]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 5]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 6]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 7]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 8]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 9]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 10]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 11]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 12]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 13]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 14]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 15]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 17]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 18]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 19]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 20]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 21]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 22]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 23]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.8ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 24]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 25]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 26]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 27]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 28]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 29]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 30]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 31]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 32]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 33]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 34]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 35]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 36]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 37]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 38]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 39]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 40]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 41]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 42]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 43]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 44]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 45]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 46]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 47]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 48]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 49]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 50]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 51]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 52]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 53]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 54]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 55]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 56]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 57]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 58]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 59]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 60]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 61]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 62]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 63]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 64]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 65]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 66]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 67]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 68]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 69]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 70]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 71]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 72]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 73]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 74]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 75]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 76]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 77]]
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:3
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 130.0ms | Allocations: 118867)
+Completed 200 OK in 158ms (Views: 114.1ms | ActiveRecord: 16.6ms | Allocations: 123166)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 19:58:14 +0000
+Processing by Api::V1::LunchesController#create as JSON
+Completed 401 Unauthorized in 2ms (ActiveRecord: 0.0ms | Allocations: 1101)
+
+
+Started POST "/api/v1/lunches/1" for ::1 at 2021-02-24 19:58:32 +0000
+  
+ActionController::RoutingError (No route matches [POST] "/api/v1/lunches/1"):
+  
+actionpack (6.0.3.5) lib/action_dispatch/middleware/debug_exceptions.rb:36:in `call'
+web-console (4.1.0) lib/web_console/middleware.rb:132:in `call_app'
+web-console (4.1.0) lib/web_console/middleware.rb:28:in `block in call'
+web-console (4.1.0) lib/web_console/middleware.rb:17:in `catch'
+web-console (4.1.0) lib/web_console/middleware.rb:17:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/show_exceptions.rb:33:in `call'
+railties (6.0.3.5) lib/rails/rack/logger.rb:37:in `call_app'
+railties (6.0.3.5) lib/rails/rack/logger.rb:26:in `block in call'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:80:in `block in tagged'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:28:in `tagged'
+activesupport (6.0.3.5) lib/active_support/tagged_logging.rb:80:in `tagged'
+railties (6.0.3.5) lib/rails/rack/logger.rb:26:in `call'
+sprockets-rails (3.2.2) lib/sprockets/rails/quiet_assets.rb:13:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/remote_ip.rb:81:in `call'
+request_store (1.5.0) lib/request_store/middleware.rb:19:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/request_id.rb:27:in `call'
+rack (2.2.3) lib/rack/method_override.rb:24:in `call'
+rack (2.2.3) lib/rack/runtime.rb:22:in `call'
+activesupport (6.0.3.5) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/static.rb:126:in `call'
+rack (2.2.3) lib/rack/sendfile.rb:110:in `call'
+actionpack (6.0.3.5) lib/action_dispatch/middleware/host_authorization.rb:82:in `call'
+webpacker (4.3.0) lib/webpacker/dev_server_proxy.rb:23:in `perform_request'
+rack-proxy (0.6.5) lib/rack/proxy.rb:57:in `call'
+railties (6.0.3.5) lib/rails/engine.rb:527:in `call'
+puma (4.3.7) lib/puma/configuration.rb:228:in `call'
+puma (4.3.7) lib/puma/server.rb:713:in `handle_request'
+puma (4.3.7) lib/puma/server.rb:472:in `process_client'
+puma (4.3.7) lib/puma/server.rb:328:in `block in run'
+puma (4.3.7) lib/puma/thread_pool.rb:134:in `block in spawn_thread'
+Started GET "/api/v1/lunches/1" for ::1 at 2021-02-24 19:58:37 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:74:in `set_lunch'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 1.0ms | Allocations: 1053)
+Completed 200 OK in 3ms (Views: 1.1ms | ActiveRecord: 0.3ms | Allocations: 2403)
+
+
+Started GET "/api/v1/lunches/10" for ::1 at 2021-02-24 19:58:43 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"10"}
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:74:in `set_lunch'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 10]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 2.4ms | Allocations: 1620)
+Completed 200 OK in 5ms (Views: 2.6ms | ActiveRecord: 0.4ms | Allocations: 2655)
+
+
+Started GET "/api/v1/lunches/25" for ::1 at 2021-02-24 19:58:46 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"25"}
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 25], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:74:in `set_lunch'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 25]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 2.4ms | Allocations: 1907)
+Completed 200 OK in 4ms (Views: 2.5ms | ActiveRecord: 0.4ms | Allocations: 2926)
+
+
+Started PATCH "/api/v1/lunches/1" for ::1 at 2021-02-24 19:59:06 +0000
+Processing by Api::V1::LunchesController#update as JSON
+  Parameters: {"lunch"=>{"release"=>"Arlon", "distance"=>50, "price"=>[1, 3], "attendees"=>["Pierre"]}, "id"=>"1"}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:74:in `set_lunch'
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/policies/lunch_policy.rb:13:in `update?'
+[31mUnpermitted parameter: :release[0m
+Completed 500 Internal Server Error in 27ms (ActiveRecord: 3.5ms | Allocations: 12691)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'attendees' for Lunch.):
+  
+app/controllers/api/v1/lunches_controller.rb:15:in `update'
