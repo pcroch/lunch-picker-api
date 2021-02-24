@@ -22,7 +22,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
   def create
     @hash_params = {
       localisation: lunch_params["localisation"],
-      distance: lunch_params["distance"] * 1000,
+      distance: lunch_params["distance"],
       price: lunch_params["price"],
       taste: nil
     }
@@ -37,12 +37,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
     matching_preferences
     choice_count
 
-    fetch_yelp(
-      @hash_params[:localisation],
-      @hash_params[:distance],
-      @hash_params[:price],
-      @hash_params[:taste]
-    )
+
 
     @lunch = Lunch.new(
       localisation: lunch_params["localisation"],
@@ -70,7 +65,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
 
   def set_lunch
     @lunch = Lunch.find(params[:id])
-    authorize @lunch  # For Pundit
+    authorize @lunch # For Pundit
   end
 
   def lunch_params
@@ -82,9 +77,13 @@ class Api::V1::LunchesController < Api::V1::BaseController
       status: :unprocessable_entity
   end
 
-
-  def upper_limit
-
+def upper_limit
+       fetch_yelp(
+      @hash_params[:localisation],
+      @hash_params[:distance],
+      @hash_params[:price],
+      @hash_params[:taste]
+    )
 
 
     # validation if empty of nil to avoid to crash the api
@@ -110,6 +109,66 @@ class Api::V1::LunchesController < Api::V1::BaseController
       render :show, status: :created
     end
   end
+  # def upper_limit
+  #      fetch_yelp(
+  #     @hash_params[:localisation],
+  #     @hash_params[:distance],
+  #     @hash_params[:price],
+  #     @hash_params[:taste]
+  #   )
+
+
+  #   # validation if empty of nil to avoid to crash the api
+  #   if @body.nil? || @body['businesses'].count.zero?
+  #     empty_request # call emtpy request method in parent
+  #   elsif @body['businesses'].count == 10
+  #     # selecting a maximum of 10 movies or less
+  #     # @body['businesses'].count < 10 ? (upper_limit = @body['businesses'].count) : (upper_limit = 10)
+  #     i = 0
+  #     # while i < 10
+  #     while i < upper_limit
+
+  #       restaurant = Restaurant.new({
+  #           'lunch_id' => @lunch.id,
+  #           'restaurant_name' => @body['businesses'][i]['name'],
+  #           'restaurant_price' => @body['businesses'][i]['price'],
+  #           'restaurant_city' => @body['businesses'][i]['location']['city'],
+  #           'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
+  #           })
+  #       restaurant.save
+  #       i += 1
+  #     end
+  #     render :show, status: :created
+  #   else
+
+  #     while (@body['businesses'].count < 10) || (@hash_params[:distance] < 25000)
+  #       @hash_params[:distance] = @hash_params[:distance] * 10
+  #                    fetch_yelp(
+  #     @hash_params[:localisation],
+  #     @hash_params[:distance],
+  #     @hash_params[:price],
+  #     @hash_params[:taste]
+  #   )
+  #     end
+
+  #       upper_limit = @body['businesses'].count
+  #       i = 0
+  #     # while i < 10
+  #     while i < upper_limit
+
+  #       restaurant = Restaurant.new({
+  #           'lunch_id' => @lunch.id,
+  #           'restaurant_name' => @body['businesses'][i]['name'],
+  #           'restaurant_price' => @body['businesses'][i]['price'],
+  #           'restaurant_city' => @body['businesses'][i]['location']['city'],
+  #           'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
+  #           })
+  #       restaurant.save
+  #       i += 1
+  #     end
+  #     render :show, status: :created
+  #   end
+  # end
 
 
   def matching_preferences
@@ -135,7 +194,8 @@ class Api::V1::LunchesController < Api::V1::BaseController
   def choice_count
     choice = @counts.max_by { |_k, v| v }
     @hash_params[:taste] = choice[0].downcase
-     # binding.pry
+    # binding.pry
+    # @counts.shift
   end
 
   def fetch_yelp(loc,dist,pr,cat = "Restaurants")
@@ -149,6 +209,14 @@ class Api::V1::LunchesController < Api::V1::BaseController
     @body = JSON.parse(response.body)
     p @body
     p "bye bye body"
+
+    # @body['businesses'].count < 10 ? fetch_yelp(loc,dist,pr,cat = "Restaurants") : (upper_limit = 10)
+    if @body['businesses'].count < 10
+
+            fetch_yelp(loc,dist*10,pr,cat = "Restaurants")
+    end
+
+
   end
 
 end
