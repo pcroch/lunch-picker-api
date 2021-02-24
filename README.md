@@ -2,7 +2,7 @@ Coming soon
 
 today list:
 
-
+remnoving barbage html and css
 important cache
 index 10 per page
 testing version api as variable
