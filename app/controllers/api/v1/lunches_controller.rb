@@ -33,7 +33,12 @@ class Api::V1::LunchesController < Api::V1::BaseController
       hash_params[:price]
     )
 
-    @lunch = Lunch.new(lunch_params)
+    @lunch = Lunch.new(
+      localisation: lunch_params["localisation"],
+      distance: lunch_params["distance"],
+      price: lunch_params["price"]
+    )
+
     @lunch.user = current_user
     authorize @lunch
     if @lunch.save
@@ -57,7 +62,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
   def lunch_params
-    params.require(:lunch).permit(:localisation, :distance, price: [])# , attendees: []
+    params.require(:lunch).permit(:localisation, :distance, attendees: [], price: [])# , attendees: []
   end
 
   def render_error

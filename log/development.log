@@ -876,3 +876,60 @@ Processing by Api::V1::LunchesController#create as JSON
 Completed 201 Created in 331ms (Views: 4.2ms | ActiveRecord: 12.7ms | Excon: 85.4ms | Allocations: 28776)
 
 
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 10:38:59 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>50, "price"=>[2, 3], "attendees"=>["Pierre"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[34mExcon Request[0m (74.46ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=50&price=[2,%203]&categories=Restaurants[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (187 Bytes)[0m
+Completed 500 Internal Server Error in 295ms (ActiveRecord: 5.9ms | Excon: 74.5ms | Allocations: 24410)
+
+
+  
+ActiveModel::UnknownAttributeError (unknown attribute 'attendees' for Lunch.):
+  
+app/controllers/api/v1/lunches_controller.rb:36:in `create'
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 10:41:16 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>50, "price"=>[2, 3], "attendees"=>["Pierre"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[34mExcon Request[0m (96.41ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=50&price=[2,%203]&categories=Restaurants[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:43:in `create'
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "50"], ["price", "{2,3}"], ["user_id", 1], ["created_at", "2021-02-24 10:41:16.364304"], ["updated_at", "2021-02-24 10:41:16.364304"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:43:in `create'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:43:in `create'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.2ms | Allocations: 117)
+Completed 201 Created in 294ms (Views: 1.0ms | ActiveRecord: 5.8ms | Excon: 96.4ms | Allocations: 24933)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-24 10:48:00 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Arlon", "distance"=>50, "price"=>[2, 3], "attendees"=>["Pierre"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[34mExcon Request[0m (87.45ms)  GET https://api.yelp.com/v3/businesses/search?location=Arlon,BE&radius=50&price=[2,%203]&categories=Restaurants[0m
+  [1m[34mExcon Response[0m (0.02ms)  [1m400 Bad Request (187 Bytes)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:44:in `create'
+  [1m[36mLunch Create (0.7ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", "50"], ["price", "{2,3}"], ["user_id", 1], ["created_at", "2021-02-24 10:48:01.177791"], ["updated_at", "2021-02-24 10:48:01.177791"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:44:in `create'
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:44:in `create'
+  Rendering api/v1/lunches/show.json.jbuilder
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.4ms | Allocations: 151)
+Completed 201 Created in 289ms (Views: 1.3ms | ActiveRecord: 2.3ms | Excon: 87.5ms | Allocations: 23639)
+
+
+Started GET "/api/v1/lunches" for ::1 at 2021-02-24 10:48:11 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  ↳ app/views/api/v1/lunches/index.json.jbuilder:1
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 2.0ms | Allocations: 1298)
+Completed 200 OK in 5ms (Views: 2.2ms | ActiveRecord: 0.2ms | Allocations: 1900)
+
+
