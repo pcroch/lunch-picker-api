@@ -12,6 +12,7 @@ Coming soon
 - [ ] test update and destroy
 - [ ] FACTORING
 - [ ] destroy and update
+- [ ] validation of model
 
 ### B- Reminder
 
