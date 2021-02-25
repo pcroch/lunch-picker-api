@@ -1,31 +1,34 @@
-# # frozen_string_literal: true
+# require 'spec_helper'
+# # if lunches_spec is cmmented, the unit testing may fail bcse of this: not sur???
+# RSpec.describe 'Unit testing' do
 
-# RSpec.describe 'Unit Testing: Error handeling testing when creating an event:', type: :request do
-#   describe 'Missing the release params' do
-#     let!(:user) { User.create(email: 'test@test.test', password: 'testest', user_name: 'TestUser', authentication_token: 'KdapjiY6vz-sBkKmNabc', id: 1) }
-#     let!(:pref) { Preference.create(user_id: 1, name: 'Test', content: %w[Action Comedy Horror]) }
-
-#     before do
-#       sample_body = { "finder": {
-
-#         "duration": 200,
-#         "attendees": ['Test'],
-#         "rating": [0, 10]
-#       } }
-
-#       post 'http://localhost:3000/api/v1/finders', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+#   describe Lunch do
+#     User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1)
+#     it "Must be able to create a new object and save it" do
+#       correct_lunch = Lunch.new(localisation: "Arlon", distance: 1000, price: [1, 4], user_id: '1')
+#       correct_lunch.save
+#       expect(Lunch.count).to eq(1)
 #     end
-#     error = { 'errors' => ['Release : The integer must be a 4 digits', "Release can't be blank"] }
-
-#     it 'returns an error message' do
-#       json_response = JSON.parse(response.body)
-#       expect(json_response).to eq(error)
+#     it "saves itself" do
+#       lunch = Lunch.new(localisation: "Arlon", distance: 1000, price: [1, 4], user_id: '1')
+#       lunch.save
+#       expect(Lunch.first).to eq(lunch)
+#     end
+#     it "localisation must not be empty" do
+#       lunch = Lunch.new(localisation: "Arlon", distance: 1000, price: [1, 4], user_id: '1')
+#       lunch.save
+#       expect(Lunch.count).to eq(0)
+#     end
+#       it "distance must not be empty" do
+#       lunch = Lunch.new(localisation: "Arlon", distance: "", price: [1, 4], user_id: '1')
+#       lunch.save
+#       expect(Lunch.count).to eq(0)
+#     end
+#       it "price must not be empty" do
+#       lunch = Lunch.new(localisation: "Arlon", distance: 1000, price: [], user_id: '1')
+#       lunch.save
+#       expect(Lunch.count).to eq(0)
 #     end
 
-#     it 'returns status code created 422' do
-#       expect(response).to have_http_status(422)
-#     end
 #   end
-
-
 # end

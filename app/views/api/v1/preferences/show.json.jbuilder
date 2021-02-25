@@ -1,3 +1,3 @@
 # frozen_string_literal: true
 
-json.extract! @preference, :name, :taste
+json.extract! @preference, :id, :name, :taste

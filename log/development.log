@@ -10777,3 +10777,253 @@ Processing by Api::V1::LunchesController#create as JSON
 Completed 201 Created in 1823ms (Views: 2.8ms | ActiveRecord: 14.8ms | Excon: 229.1ms | Allocations: 70001)
 
 
+Started POST "/api/v1/sign_up" for ::1 at 2021-02-25 14:38:07 +0000
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"aaaaaa@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}, "registration"=>{"user"=>{"email"=>"aaaaaa@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}}
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:12:in `create'
+  [1m[36mUser Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "aaaaaa@example.com"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/registrations_controller.rb:12:in `create'
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/api/v1/registrations_controller.rb:12:in `create'
+Completed 422 Unprocessable Entity in 208ms (Views: 0.1ms | ActiveRecord: 4.2ms | Allocations: 14038)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-25 14:42:21 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>35000, "price"=>[1, 4], "attendees"=>["Pierre"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."name" = $1[0m  [["name", "Pierre"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:121:in `matching_preferences'
+  [1m[34mExcon Request[0m (80.64ms)  GET https://api.yelp.com/v3/businesses/search?location=Saint%20Gilles,BE&radius=35000&price=1,2,3,4&categories=italian[0m
+  [1m[34mExcon Response[0m (0.01ms)  [1m200 OK (19.4 KB)[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[36mLunch Create (0.8ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Saint Gilles"], ["distance", "35000"], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-25 14:42:21.790545"], ["updated_at", "2021-02-25 14:42:21.790545"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[35m (7.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:57:in `create'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.5ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "La Bottega Della Pizza"], ["restaurant_price", "€€"], ["restaurant_city", "Saint-Gilles"], ["restaurant_category", "pizza"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.824357"], ["updated_at", "2021-02-25 14:42:21.824357"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Pasta Divina"], ["restaurant_price", "€€"], ["restaurant_city", "Brussels"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.831662"], ["updated_at", "2021-02-25 14:42:21.831662"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.4ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Osteria Bolognese"], ["restaurant_price", "€€"], ["restaurant_city", "Ixelles"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.845954"], ["updated_at", "2021-02-25 14:42:21.845954"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Winehouse Osteria"], ["restaurant_price", "€€"], ["restaurant_city", "Brussels"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.852203"], ["updated_at", "2021-02-25 14:42:21.852203"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Dolce Amaro"], ["restaurant_price", "€€€"], ["restaurant_city", "Saint-Gilles"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.857953"], ["updated_at", "2021-02-25 14:42:21.857953"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Gazzetta"], ["restaurant_price", "€€"], ["restaurant_city", "Brussels"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.863872"], ["updated_at", "2021-02-25 14:42:21.863872"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Posto Al Sole"], ["restaurant_price", "€€"], ["restaurant_city", "Saint-Gilles"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.869743"], ["updated_at", "2021-02-25 14:42:21.869743"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.3ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "N 7"], ["restaurant_price", "€€€"], ["restaurant_city", "Ixelles"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.875391"], ["updated_at", "2021-02-25 14:42:21.875391"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Ricciocapriccio"], ["restaurant_price", "€€€"], ["restaurant_city", "Ixelles"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.880469"], ["updated_at", "2021-02-25 14:42:21.880469"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 16], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[36mRestaurant Create (0.2ms)[0m  [1m[32mINSERT INTO "restaurants" ("restaurant_name", "restaurant_price", "restaurant_city", "restaurant_category", "lunch_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["restaurant_name", "Le Millennium"], ["restaurant_price", "€€"], ["restaurant_city", "Saint-Josse-ten-Noode"], ["restaurant_category", "italian"], ["lunch_id", 16], ["created_at", "2021-02-25 14:42:21.884123"], ["updated_at", "2021-02-25 14:42:21.884123"]]
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/lunches_controller.rb:105:in `upper_limit'
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 16]]
+  ↳ app/views/api/v1/lunches/show.json.jbuilder:4
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 2.6ms | Allocations: 3475)
+Completed 201 Created in 863ms (Views: 3.6ms | ActiveRecord: 30.0ms | Excon: 80.7ms | Allocations: 75374)
+
+
+Started GET "/api/v1/preferences" for ::1 at 2021-02-25 14:43:55 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.3ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  ↳ app/views/api/v1/preferences/index.json.jbuilder:3
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 1.9ms | Allocations: 1096)
+Completed 200 OK in 5ms (Views: 2.2ms | ActiveRecord: 0.3ms | Allocations: 2019)
+
+
+Started GET "/api/v1/preferences/1" for ::1 at 2021-02-25 14:44:58 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1", "preference"=>{}}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:45:in `set_preference'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.5ms | Allocations: 150)
+Completed 200 OK in 3ms (Views: 0.9ms | ActiveRecord: 0.2ms | Allocations: 1447)
+
+
+Started GET "/api/v1/preferences/1" for ::1 at 2021-02-25 14:48:13 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:45:in `set_preference'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.2ms | Allocations: 85)
+Completed 200 OK in 2ms (Views: 0.6ms | ActiveRecord: 0.2ms | Allocations: 1102)
+
+
+Started GET "/api/v1/preferences/1" for ::1 at 2021-02-25 14:48:16 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:45:in `set_preference'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 86)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.2ms | Allocations: 1117)
+
+
+Started GET "/api/v1/preferences/10" for ::1 at 2021-02-25 14:48:24 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"10"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 10], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:45:in `set_preference'
+Completed 404 Not Found in 1ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 1088)
+
+
+Started GET "/api/v1/preferences/1" for ::1 at 2021-02-25 14:48:44 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:45:in `set_preference'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 86)
+Completed 200 OK in 2ms (Views: 0.5ms | ActiveRecord: 0.2ms | Allocations: 1117)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-25 15:01:46 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"Passssssierre", "content"=>["Action", "Horror"]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+[31mUnpermitted parameter: :content[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[36mPreference Create (0.6ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["name", "Passssssierre"], ["user_id", 1], ["created_at", "2021-02-25 15:01:46.868136"], ["updated_at", "2021-02-25 15:01:46.868136"]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 49)
+Completed 201 Created in 16ms (Views: 0.5ms | ActiveRecord: 8.0ms | Allocations: 5241)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-25 15:02:42 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"Passssssierre", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[36mPreference Create (0.3ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Passssssierre"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-25 15:02:42.547940"], ["updated_at", "2021-02-25 15:02:42.547940"]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 77)
+Completed 201 Created in 12ms (Views: 0.4ms | ActiveRecord: 7.4ms | Allocations: 4604)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-25 15:04:49 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"Passssssierre", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.3ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[36mPreference Create (0.3ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Passssssierre"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-25 15:04:49.823511"], ["updated_at", "2021-02-25 15:04:49.823511"]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[35m (6.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 77)
+Completed 201 Created in 14ms (Views: 0.5ms | ActiveRecord: 7.6ms | Allocations: 4596)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-25 15:04:58 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"www", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "www"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-25 15:04:58.864900"], ["updated_at", "2021-02-25 15:04:58.864900"]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  [1m[35m (6.8ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:28:in `create'
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 77)
+Completed 201 Created in 12ms (Views: 0.6ms | ActiveRecord: 7.3ms | Allocations: 4594)
+
+
+Started GET "/api/v1/preferences" for ::1 at 2021-02-25 15:16:36 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.3ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  ↳ app/views/api/v1/preferences/index.json.jbuilder:3
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 1.2ms | Allocations: 1410)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.3ms | Allocations: 1834)
+
+
+Started GET "/api/v1/preferences" for ::1 at 2021-02-25 15:17:07 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.3ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  ↳ app/views/api/v1/preferences/index.json.jbuilder:3
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 2.1ms | Allocations: 1464)
+Completed 200 OK in 3ms (Views: 2.4ms | ActiveRecord: 0.3ms | Allocations: 2191)
+
+
