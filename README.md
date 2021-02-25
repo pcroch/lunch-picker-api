@@ -3,7 +3,7 @@ Coming soon
 
 ### A- To do list
 
-- [ ] remnoving barbage html and css
+- [x] remnoving barbage html and css
 - [ ] important cache
 - [ ] index 10 per page
 - [ ] Cors testing the setup
@@ -11,6 +11,7 @@ Coming soon
 - [ ] better shouw id 
 - [ ] test update and destroy
 - [ ] FACTORING
+- [ ] destroy and update
 
 ### B- Reminder
 
