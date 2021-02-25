@@ -1,7 +1,9 @@
 require 'pry'
 class Api::V1::LunchesController < Api::V1::BaseController
+include Pundit
   acts_as_token_authentication_handler_for User, except: [ :index, :show ]
   before_action :set_lunch, only: [ :show, :update , :destroy]
+  before_action :controller_validation, only: [:create]
 
   def index
     @lunches = policy_scope(Lunch)
@@ -20,18 +22,20 @@ class Api::V1::LunchesController < Api::V1::BaseController
   end
 
   def create
-    @hash_params = {
+    # binding.pry
+        @hash_params = {
       localisation: lunch_params["localisation"],
       distance: lunch_params["distance"].to_i,
       price: lunch_params["price"],
       taste: nil
     }
 
-    # price
-    price_min = lunch_params["price"].min
-    price_max = lunch_params["price"].max
-    @hash_params[:price] = [*price_min..price_max].join(',')
 
+
+
+      price_min = lunch_params["price"].min
+      price_max = lunch_params["price"].max
+      @hash_params[:price] = [*price_min..price_max].join(',')
 
 
 # binding.pry
@@ -56,10 +60,10 @@ class Api::V1::LunchesController < Api::V1::BaseController
     authorize @lunch
     if @lunch.save
       upper_limit
-      # render :show, status: :created
     else
       render_error
     end
+
   end
 
    def destroy
@@ -132,8 +136,6 @@ def upper_limit
   def choice_count
     choice = @counts.max_by { |_k, v| v }
     @hash_params[:taste] = choice[0].downcase
-    # binding.pry
-    # @counts.shift
   end
 
   def fetch_yelp(loc,dist,pr,cat = "Restaurants")
@@ -165,5 +167,15 @@ def upper_limit
 
 end
 
+  def controller_validation
+      if (lunch_params["distance"].is_a? String) || (lunch_params["distance"] > 39_999)
+        invalid_distance
+      elsif lunch_params["price"].empty?
+         empty_price_array
+      elsif lunch_params["attendees"].empty? || lunch_params["attendees"]== [""]
+         empty_attendees_array
+
+      end
+  end
 
 end
