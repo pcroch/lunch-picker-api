@@ -2,7 +2,7 @@
 require 'rails_helper'
 require 'spec_helper'
 
-RSpec.describe 'Integration testing', type: :request do
+RSpec.describe 'Integration testing for the Lunch controller', type: :request do
   #  event = Finder.new(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")
   #  event.save
   # Preference.create(user_id: 2, name: "Bob", finder_id: 1, content: ["Adventure", "Family", "Horror"])
@@ -48,30 +48,30 @@ RSpec.describe 'Integration testing', type: :request do
   end
 
   # post heder and  body or params
-  describe 'Create action' do
-    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
-    #  let!(:event) {Finder.create(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")}
-    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
+  # describe 'Create action' do
+  #   let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
+  #   #  let!(:event) {Finder.create(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")}
+  #   let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
 
-    before do
-        sample_body = { "lunch": {
-    "localisation": "Saint Gilles",
-    "distance": 50,
-    "price": [1,4],
-    "attendees": ['TestUser']
-   }}
+  #   before do
+  #       sample_body = { "lunch": {
+  #   "localisation": "Saint Gilles",
+  #   "distance": 35_000,
+  #   "price": [1,4],
+  #   "attendees": ['TestUser']
+  #  }}
 
-      post 'http://localhost:3000/api/v1/lunches', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
-    end
-    it "should have the same restaurant's name and localisation" do
-      json_response = JSON.parse(response.body)
-      expect(json_response['restaurants'][0]['restaurant_city']).to eq('Saint-Gilles')
-      expect(json_response['restaurants'][0]['restaurant_name']).to eq("La Bottega Della Pizza")
+  #     post 'http://localhost:3000/api/v1/lunches', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+  #   end
+  #   it "should have the same restaurant's name and localisation" do
+  #     json_response = JSON.parse(response.body)
+  #     expect(json_response['restaurants'][0]['restaurant_city']).to eq('Saint-Gilles')
+  #     expect(json_response['restaurants'][0]['restaurant_name']).to eq("La Bottega Della Pizza")
 
-    end
+  #   end
 
-    it 'should return status code created 201' do
-      expect(response).to have_http_status(201)
-    end
-  end
+  #   it 'should return status code created 201' do
+  #     expect(response).to have_http_status(201)
+  #   end
+  # end
 end
