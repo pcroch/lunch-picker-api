@@ -28,18 +28,18 @@ RSpec.describe 'Integration testing', type: :request do
   describe 'Show action' do
     # this testing need ot be improoved as i could nt find the movie list?
 
-    let!(:user) { User.create(email: 'test@test.test', password: 'testest', user_name: 'TestUser', authentication_token: 'KdapjiY6vz-sBkKmNabc', id: 1) }
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
     #  let!(:event) {Finder.create(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")}
-    let!(:pref) { Preference.create(user_id: 1, name: 'Test', content: %w[Action Comedy Horror]) }
-    let!(:event) { Finder.create(id: 1, release: 2020, duration: 200, rating: [0, 10], user_id: '1') }
+    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
+    let!(:lunch) { Lunch.create(id: 1, localisation: "Arlon", distance: 1000, price: [1, 4], user_id: '1') }
 
     before do
-      get 'http://localhost:3000/api/v1/finders/1'
+      get 'http://localhost:3000/api/v1/lunches/1'
     end
-    it 'should have the same id and release year' do
+    it 'should have the same id and localisation' do
       json_response = JSON.parse(response.body)
       expect(json_response['id']).to eq(1)
-      expect(json_response['release']).to eq('2020')
+      expect(json_response['localisation']).to eq('Arlon')
     end
 
     it 'should return status code created 200' do
@@ -49,24 +49,25 @@ RSpec.describe 'Integration testing', type: :request do
 
   # post heder and  body or params
   describe 'Create action' do
-    let!(:user) { User.create(email: 'test@test.test', password: 'testest', user_name: 'TestUser', authentication_token: 'KdapjiY6vz-sBkKmNabc', id: 1) }
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
     #  let!(:event) {Finder.create(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")}
-    let!(:pref) { Preference.create(user_id: 1, name: 'Test', content: %w[Action Comedy Horror]) }
+    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
 
     before do
-      sample_body = { "finder": {
-        "release": 2020,
-        "duration": 160,
-        "attendees": ['Test'],
-        "rating": [0, 10]
-      } }
+        sample_body = { "lunch": {
+    "localisation": "Saint Gilles",
+    "distance": 50,
+    "price": [1,4],
+    "attendees": ['TestUser']
+   }}
 
-      post 'http://localhost:3000/api/v1/finders', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+      post 'http://localhost:3000/api/v1/lunches', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
     end
-    it 'should have the same title and vote average' do
+    it "should have the same restaurant's name and localisation" do
       json_response = JSON.parse(response.body)
-      expect(json_response['movies'][0]['title']).to eq('Wonder Woman 1984')
-      expect(json_response['movies'][0]['vote_average']).to eq('7')
+      expect(json_response['restaurants'][0]['restaurant_city']).to eq('Saint-Gilles')
+      expect(json_response['restaurants'][0]['restaurant_name']).to eq("La Bottega Della Pizza")
+
     end
 
     it 'should return status code created 201' do

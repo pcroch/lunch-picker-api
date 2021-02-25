@@ -22,7 +22,7 @@ class Api::V1::LunchesController < Api::V1::BaseController
   def create
     @hash_params = {
       localisation: lunch_params["localisation"],
-      distance: lunch_params["distance"],
+      distance: lunch_params["distance"].to_i,
       price: lunch_params["price"],
       taste: nil
     }
@@ -108,67 +108,6 @@ def upper_limit
       render :show, status: :created
     end
   end
-  # def upper_limit
-  #      fetch_yelp(
-  #     @hash_params[:localisation],
-  #     @hash_params[:distance],
-  #     @hash_params[:price],
-  #     @hash_params[:taste]
-  #   )
-
-
-  #   # validation if empty of nil to avoid to crash the api
-  #   if @body.nil? || @body['businesses'].count.zero?
-  #     empty_request # call emtpy request method in parent
-  #   elsif @body['businesses'].count == 10
-  #     # selecting a maximum of 10 movies or less
-  #     # @body['businesses'].count < 10 ? (upper_limit = @body['businesses'].count) : (upper_limit = 10)
-  #     i = 0
-  #     # while i < 10
-  #     while i < upper_limit
-
-  #       restaurant = Restaurant.new({
-  #           'lunch_id' => @lunch.id,
-  #           'restaurant_name' => @body['businesses'][i]['name'],
-  #           'restaurant_price' => @body['businesses'][i]['price'],
-  #           'restaurant_city' => @body['businesses'][i]['location']['city'],
-  #           'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
-  #           })
-  #       restaurant.save
-  #       i += 1
-  #     end
-  #     render :show, status: :created
-  #   else
-
-  #     while (@body['businesses'].count < 10) || (@hash_params[:distance] < 25000)
-  #       @hash_params[:distance] = @hash_params[:distance] * 10
-  #                    fetch_yelp(
-  #     @hash_params[:localisation],
-  #     @hash_params[:distance],
-  #     @hash_params[:price],
-  #     @hash_params[:taste]
-  #   )
-  #     end
-
-  #       upper_limit = @body['businesses'].count
-  #       i = 0
-  #     # while i < 10
-  #     while i < upper_limit
-
-  #       restaurant = Restaurant.new({
-  #           'lunch_id' => @lunch.id,
-  #           'restaurant_name' => @body['businesses'][i]['name'],
-  #           'restaurant_price' => @body['businesses'][i]['price'],
-  #           'restaurant_city' => @body['businesses'][i]['location']['city'],
-  #           'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
-  #           })
-  #       restaurant.save
-  #       i += 1
-  #     end
-  #     render :show, status: :created
-  #   end
-  # end
-
 
   def matching_preferences
     i = 0
@@ -212,7 +151,11 @@ def upper_limit
       else
         # fetch_yelp(loc,dist/10,pr,cat)
         country ="BE"
-      url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist/10}&price=#{pr}&categories=#{cat}"
+        # p "hello"
+        #  p dist
+        #  p "bye bye"
+        dist = dist.div(10)
+      url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
       api_key = "dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx"
   # binding.pry
       response = Excon.get(url, :headers => {'Authorization' => "Bearer #{api_key}"})
