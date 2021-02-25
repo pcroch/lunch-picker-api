@@ -22,4 +22,22 @@ class Api::V1::BaseController < ActionController::API
   def empty_request
     render json: { error: 'No restaurant found' }, status: :not_found
   end
+
+  def invalid_distance
+    render json: { error: 'Distance is invalid' }, status: :not_found
+  end
+
+  def empty_price_array
+    render json: { error: 'Price array is empty' }, status: :not_found
+  end
+
+  def empty_attendees_array
+    render json: { error: 'Attendees array is empty' }, status: :not_found
+  end
+
+    def empty_taste_array
+    render json: { error: 'Taste array is empty' }, status: :not_found
+  end
+
 end
+
