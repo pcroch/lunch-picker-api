@@ -13,6 +13,7 @@ Coming soon
 - [ ] FACTORING
 - [ ] destroy and update
 - [ ] validation of model
+- [ ] HEROKU
 
 ### B- Reminder
 
