@@ -47,7 +47,7 @@ RSpec.describe 'Integration testing for the Lunch controller', type: :request do
     end
   end
 
-  post heder and  body or params
+
   describe 'Create action' do
     let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
     #  let!(:event) {Finder.create(release: "2008", duration: "200", rating: ["5", "10"], user_id: "1")}
