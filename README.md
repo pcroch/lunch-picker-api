@@ -21,12 +21,12 @@ This api will render the restaurants located around  designed city. The user mus
   
     1 * launch and install the rails server with the following command:
         git clone git@github.com:pcroch/
-        cd find-movie 
+        cd lunch-picker-api 
         yarn install && bundle install
         rails db:create db:migrate db:seed
         rails s
         
-### How to fetch in short:  
+### How to fetch in short (example):  
 
     1 * Headers:
         Content-Type    application/json
@@ -36,34 +36,35 @@ This api will render the restaurants located around  designed city. The user mus
      This is a default user to demonstration. You can of course create your own user. Please see below.
      
     2 * Body: 
-       { "finder": {
-        "release": 2008,
-        "duration": 90,
-        "rating": [1, 10],
-        "attendees": ["Pierre"]
-       }}
+            { "lunch": {
+                "localisation": "Saint gilles",
+                "distance": 35000,
+                "price": [1,4],
+                "attendees": ["Pierre"]
+               }}
        
       This is an example of a  raw body request
 ### Body variables:
-   - Release:
+   - Localisation:
     
-          *Release year of the movie           
-          *Positive integer with a maximum of 4 digits
+          *This string indicates the geographic area to be used when searching for businesses.
+          *By default the city must be in Belgium
+          *It must be a string: "Arlon" or "Saint Gilles"
    
-   - Duration:
+   - Distance:
       
-          *Duration of the movies im minutes
+          *Distance in meters from the search location
           *Positive integer
       
-   - Rating:
+   - Price:
    
-          *Rating range to choose movies
-          *Positive integer between 0 and 10
+          *Pricing Range to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. 
+          *Positive integer between 1 and 4. If the number are the same, it will be considered as Integer.
       
   - Attendees:
 
           *List of people for the event. 
-          *The name must be the name given in the preferences but not the username
+          *The name must be the name given in the preferences but not the email adress
     
 ## III. HOW TO
 
