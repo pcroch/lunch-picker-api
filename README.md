@@ -16,9 +16,9 @@ Coming soon
 - [x] validation of model
 - [x] HEROKU
 - [ ] **HEROKU pipeline** **low**
-- [ ] add the distances to the restaruatns ouput to have a better vieuw of choossen restaruent **priority high**
+- [x] add the distances to the restaruatns ouput to have a better vieuw of choossen restaruent **priority high**
 - [ ] adding cass and modul **priority medium**
-- [ ] change string into integer in schemas **priority medium**
+- [x] change string into integer in schemas **priority medium**
 
 ### B- Reminder
 
