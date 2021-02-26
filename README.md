@@ -67,7 +67,7 @@ This api will render the restaurants located around  designed city. The user mus
           *The name must be the name given in the preferences but not the email adress
     
 ## III. HOW TO
-
+### Session
 #### Sign-up the API
   When you sin in, you **MUST** keep somewhere the authentication_token otherwise you won't be able to sign when creating new event. It will look like this *"authentication_token": "4xxvRjtXFUPPMubjs94t"*
     
@@ -75,58 +75,120 @@ This api will render the restaurants located around  designed city. The user mus
   
       curl -i -X POST                                                                                                                     \
             -H 'Content-Type      application/json'                                                                                       \
-            -d '{"user": {"email":"4444@example.com","password":"password", "password_confirmation":"password", "user_name": "qwerty" }}' \
-            localhost:3000/api/v1/sign_up
+            -d '{"user": {"email":"test@example.com","password":"password", "password_confirmation":"password"}}' \
+            https://api-lunch-picker.herokuapp.com//api/v1/sign_up
   Render: 
       
-      {
-    "messages": "Sign Up Successfully",
-    "is_success": true,
-    "data": {
-        "user": {
-            "id": 5,
-            "email": "4444@example.com",
-            "user_name": "qwerty",
-            "created_at": "2021-02-05T11:48:26.940Z",
-            "updated_at": "2021-02-05T11:48:26.940Z",
-            "authentication_token": "4xxvRjtXFUPPMubjs94t"
-        }
-    }
-    }
-
-#### Index Action: Get of the db
+            {
+                "messages": "Sign Up Successfully",
+                "is_success": true,
+                "data": {
+                    "user": {
+                        "id": 1,
+                        "email": "test@example.com",
+                        "created_at": "2021-02-26T16:33:42.743Z",
+                        "updated_at": "2021-02-26T16:33:42.743Z",
+                        "authentication_token": "V1J27usvpS1dJN_ULYDT"
+                    }
+                }
+            }
+### Preferences           
+#### Index Action: Get list of the db
   Fetch:
             
-    curl -s https://movie-api-finder.herokuapp.com/api/v1/finders | jq
+    curl -s https://api-lunch-picker.herokuapp.com/api/v1/preferences | jq
       
   Render: 
       
       [
-    {
-        "id": 1,
-        "duration": "210",
-        "rating": [
-            "0",
-            "10"
-        ],
-        "movies": [
-            {
-                "title": "The Lord of the Rings: The Return of the King",
-                "overview": "Aragorn is revealed as the heir to the ancient kings as he, Gandalf and the other members of the broken fellowship struggle to save Gondor from Sauron's forces. Meanwhile, Frodo and Sam take the ring closer to the heart of Mordor, the dark lord's realm.",
-                "vote_average": "8.5"
-            },
-            {
-                "title": "The Lord of the Rings: The Two Towers",
-                "overview": "Frodo and Sam are trekking to Mordor to destroy the One Ring of Power while Gimli, Legolas and Aragorn search for the orc-captured Merry and Pippin. All along, nefarious wizard Saruman awaits the Fellowship members at the Orthanc Tower in Isengard.",
-                "vote_average": "8.3"
-            }
-        ]
-    },
-    {
-        "id": 2,
-        "duration": "210",
-      **etc ...**
-      ]    
+          {
+              "id": 1,
+              "name": "TestUser",
+              "taste": [
+                  "Italian",
+                  "Lebanese",
+                  "Japanese",
+                  "Belgian"
+              ]
+          }
+      ]
+
+
+
+
+#### Show Action: Get a specific preference on the db
+  Fetch:
+  
+   Where id is the id of the event. It must be an integer
+   
+    curl -s https://api-lunch-picker.herokuapp.com/api/v1/preferences/:id | jq
+        
+         
+ Render:  
+      When :id is equal to 1
+      
+         {
+          "id": 1,
+          "name": "TestUser",
+          "taste": [
+              "Italian",
+              "Lebanese",
+              "Japanese",
+              "Belgian"
+          ]
+      }     
+
+
+#### Create Action: create new preference for a specific user.
+   You need to be *authenticated* and of course have the *authorization*. It is granted when you sign up.
+
+Fetch: 
+   
+    curl -i -X POST 
+        -H 'Content-Type    application/json'                                                           \
+        -H 'X-User-Email    test@example.come'                                                          \
+        -H 'X-User-Token    V1J27usvpS1dJN_ULYDT'                                                       \
+        -d '{ "preference": {"name": "TestUser","taste": ["Italian","Lebanese","Japanese","Belgian"]} }'\ 
+        https://api-lunch-picker.herokuapp.com/api/v1/preferences
+Render:   
+         
+      {
+          "id": 1,
+          "name": "TestUser",
+          "taste": [
+              "Italian",
+              "Lebanese",
+              "Japanese",
+              "Belgian"
+          ]
+      }
+        
+### Lunch
+#### Index Action: Get of the db
+  Fetch:
+            
+    curl -s https://api-lunch-picker.herokuapp.com/api/v1/lunches | jq
+      
+  Render: 
+      
+        {
+          "id": 2,
+          "localisation": "Arlon",
+          "distance": 5,
+          "price": [
+              "1",
+              "4"
+          ],
+          "restaurants": [
+              {
+                  "restaurant_name": "Da Franco's",
+                  "restaurant_price": "€€€",
+                  "restaurant_city": "Arlon",
+                  "restaurant_category": "italian",
+                  "restaurant_distance": 1826
+              }
+          ]
+      }
 
 
 
@@ -136,7 +198,7 @@ This api will render the restaurants located around  designed city. The user mus
   
    Where id is the id of the event. It must be an integer
    
-    curl -s https://movie-api-finder.herokuapp.com/api/v1/finder/:id | jq
+    curl -s https://api-lunch-picker.herokuapp.com/api/v1/lunches/:id | jq
         
          
  Render:  
@@ -161,7 +223,7 @@ This api will render the restaurants located around  designed city. The user mus
 }
     
 
-#### Create Action: create an event via a post reauest
+#### Create Action: create an event via a post request
    You need to be *authenticated* and of course have the *authorization*. It is granted when you sign up.
 
 Fetch: 
