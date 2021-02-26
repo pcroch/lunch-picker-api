@@ -13,7 +13,8 @@ Coming soon
 - [ ] **FACTORING** **high**
 - [ ] destroy and update
 - [x] validation of model
-- [ ] **HEROKU** **high**
+- [x] HEROKU
+- [ ] **HEROKU pipeline** **low**
 
 ### B- Reminder
 
