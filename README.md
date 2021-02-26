@@ -4,6 +4,7 @@ Coming soon
 ### A- To do list
 
 - [x] remnoving barbage html and css
+- [ ] **creating the doc** **medium**
 - [ ] important cache
 - [ ] index 10 per page
 - [ ] Cors testing the setup
@@ -13,7 +14,8 @@ Coming soon
 - [ ] **FACTORING** **high**
 - [ ] destroy and update
 - [x] validation of model
-- [ ] **HEROKU** **high**
+- [x] HEROKU
+- [ ] **HEROKU pipeline** **low**
 
 ### B- Reminder
 
