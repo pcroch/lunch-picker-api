@@ -11,7 +11,7 @@ RSpec.describe 'Integration testing User Controller', type: :request do
         "user": {
           "email": '9@example.com',
           "password": 'password',
-          "password_confirmation": 'password',
+          "password_confirmation": 'password'
         }
       }
     end
@@ -32,7 +32,7 @@ RSpec.describe 'Integration testing User Controller', type: :request do
         "user": {
           "email": '9@example.com',
           "password": 'password',
-          "password_confirmation": '',
+          "password_confirmation": ''
         }
       }
     end
@@ -47,4 +47,3 @@ RSpec.describe 'Integration testing User Controller', type: :request do
     end
   end
 end
-

@@ -6,7 +6,7 @@ module Api
       # before_action :authenticate_user!, except: [:create, :index]
       acts_as_token_authentication_handler_for User, except: %i[index show]
       before_action :set_preference, only: %i[show update destroy]
-        before_action :controller_validation, only: [:create]
+      before_action :controller_validation, only: [:create]
       def index
         @preferences = policy_scope(Preference)
       end
@@ -57,11 +57,8 @@ module Api
       end
 
       def controller_validation
-      if preference_params["taste"].empty? || preference_params["taste"]== [""]
-         empty_attendees_array
-
+        empty_attendees_array if preference_params['taste'].empty? || preference_params['taste'] == ['']
       end
-  end
     end
   end
 end
