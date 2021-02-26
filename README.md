@@ -279,7 +279,7 @@ Coming soon
       It will launch the Unit testing and Integration testing
 
 ### B- Integration Testing Description: 
-      Some testing are already setup for the finders controller and some models.
+      Some testing are already setup for the lubche controller and some models.
       
       More information will coming soon
       
