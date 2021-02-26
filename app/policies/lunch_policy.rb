@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LunchPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve

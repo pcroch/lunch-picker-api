@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Lunch < ApplicationRecord
   belongs_to :user
   has_many :lunch_preferences
@@ -10,8 +12,6 @@ class Lunch < ApplicationRecord
 
   def range_price
     sample = %w[1 2 3 4]
-    errors.add(:price, "range is invalid") unless price.all? { |w| sample.include?(w) }
+    errors.add(:price, 'range is invalid') unless price.all? { |w| sample.include?(w) }
   end
 end
-
-
