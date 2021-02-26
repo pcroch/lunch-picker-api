@@ -1,4 +1,4 @@
-# Api description: An api to find movies based on criteria
+# Api description: An api to find restaurants based on criteria
 
 ## I. General description
 
@@ -12,18 +12,17 @@ This api will render the restaurants located around  designed city. The user mus
 
 ### End-points: 
   
-   Production: https://movie-api-finder.herokuapp.com/api/v1/finders
+   Production: https://api-lunch-picker.herokuapp.com/api/v1/lunches
    
    Locally: http://localhost:3000/api/v1/lunches
  
 ### Installation:  
-
   
     1 * launch and install the rails server with the following command:
         git clone git@github.com:pcroch/
         cd lunch-picker-api 
         yarn install && bundle install
-        rails db:create db:migrate db:seed
+        rails db:drop db:create db:migrate db:seed
         rails s
         
 ### How to fetch in short (example):  
@@ -76,7 +75,7 @@ This api will render the restaurants located around  designed city. The user mus
   
       curl -i -X POST                                                                                                                     \
             -H 'Content-Type      application/json'                                                                                       \
-            -d '{"user": {"email":"test@example.com","password":"password", "password_confirmation":"password"}}' \
+            -d '{"user": {"email":"test@example.com","password":"password", "password_confirmation":"password"}}'                         \
             https://api-lunch-picker.herokuapp.com//api/v1/sign_up
   Render: 
       
