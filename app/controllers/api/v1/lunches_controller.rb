@@ -1,3 +1,4 @@
+require 'pry'
 module Api
   module V1
     class LunchesController < Api::V1::BaseController
@@ -95,6 +96,8 @@ module Api
   end
 end
 
+
+
 def matching_preferences
   # create an hash with the tastes preferences of everyone
   i = 0
@@ -159,13 +162,14 @@ def upper_limit
     i = 0
     # while i < 10
     while i < upper_limit
-
+# binding.pry
       restaurant = Restaurant.new({
                                     'lunch_id' => @lunch.id,
                                     'restaurant_name' => @body['businesses'][i]['name'],
                                     'restaurant_price' => @body['businesses'][i]['price'],
                                     'restaurant_city' => @body['businesses'][i]['location']['city'],
-                                    'restaurant_category' => @body['businesses'][i]['categories'][0]['alias']
+                                    'restaurant_category' => @body['businesses'][i]['categories'][0]['alias'],
+                                    'restaurant_distance' => @body['businesses'][i]['distance'].round()
                                   })
       restaurant.save
       i += 1
