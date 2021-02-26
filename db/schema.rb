@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_02_24_134452) do
 
   create_table "lunches", force: :cascade do |t|
     t.string "localisation"
-    t.string "distance"
+    t.integer "distance"
     t.string "price", default: [], array: true
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
