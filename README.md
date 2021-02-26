@@ -4,7 +4,7 @@ Coming soon
 ### A- To do list
 
 - [x] remnoving barbage html and css
-- [ ] **creating the doc** **medium**
+- [ ] **creating the doc** **high**
 - [ ] important cache
 - [ ] index 10 per page
 - [ ] Cors testing the setup
