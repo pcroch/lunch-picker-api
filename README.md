@@ -111,6 +111,9 @@ This api will render the restaurants located around  designed city. The user mus
                   "Belgian"
               ]
           }
+          
+                  
+          ...etc...
       ]
 
 
@@ -125,6 +128,7 @@ This api will render the restaurants located around  designed city. The user mus
         
          
  Render:  
+ 
       When :id is equal to 1
       
          {
@@ -136,7 +140,7 @@ This api will render the restaurants located around  designed city. The user mus
               "Japanese",
               "Belgian"
           ]
-      }     
+        }     
 
 
 #### Create Action: create new preference for a specific user.
