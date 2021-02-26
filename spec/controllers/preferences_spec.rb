@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'rails_helper'
 require 'spec_helper'
@@ -22,21 +23,20 @@ RSpec.describe 'Integration testing for the Preference controller', type: :reque
     it 'sould return status code 200' do
       expect(response).to have_http_status(200)
     end
- end
+  end
 
   # Show a specific event
   describe 'Show action' do
     let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
     let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian], id: 1) }
 
-
     before do
       get 'http://localhost:3000/api/v1/preferences/1'
     end
     it 'should have 4 categories of tastes' do
       json_response = JSON.parse(response.body)
-      expect(json_response['name']).to eq("TestUser")
-      expect(json_response['taste']).to eq(["Italian", "Lebanese", "Japanese", "Belgian"])
+      expect(json_response['name']).to eq('TestUser')
+      expect(json_response['taste']).to eq(%w[Italian Lebanese Japanese Belgian])
     end
 
     it 'should return status code created 200' do
@@ -44,29 +44,27 @@ RSpec.describe 'Integration testing for the Preference controller', type: :reque
     end
   end
 
-
   describe 'Create action' do
     let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
     # let!(:lunch) { Lunch.create(id: 1, localisation: "Arlon", distance: 1000, price: [1, 4], user_id: '1') }
 
     before do
-        sample_body = { "preference": {
-        "name": "TestUser",
-        "taste": [
-                    "Italian",
-                    "Lebanese",
-                    "Japanese",
-                    "Belgian"
-                ]
-       } }
+      sample_body = { "preference": {
+        "name": 'TestUser',
+        "taste": %w[
+          Italian
+          Lebanese
+          Japanese
+          Belgian
+        ]
+      } }
 
-      post 'http://localhost:3000/api/v1/preferences', params: sample_body, headers: {'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+      post 'http://localhost:3000/api/v1/preferences', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
     end
-    it "should have the same name" do
+    it 'should have the same name' do
       json_response = JSON.parse(response.body)
       expect(json_response['name']).to eq('TestUser')
-      expect(json_response['taste']).to eq(["Italian", "Lebanese", "Japanese", "Belgian"])
-
+      expect(json_response['taste']).to eq(%w[Italian Lebanese Japanese Belgian])
     end
 
     it 'should return status code created 201' do
