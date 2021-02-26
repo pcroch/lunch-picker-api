@@ -11,11 +11,12 @@ Coming soon
 - [ ] testing version api as variable???
 - [ ] adding **INITIALIZE** to lunches controller **medium**
 - [ ] test update and destroy
-- [ ] **FACTORING** **high**
+- [x] **FACTORING** **high**
 - [ ] destroy and update
 - [x] validation of model
 - [x] HEROKU
 - [ ] **HEROKU pipeline** **low**
+- [ ] add the distances to the restaruatns ouput to have a better vieuw of choossen restaruent
 
 ### B- Reminder
 
