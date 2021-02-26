@@ -21,7 +21,7 @@ include Pundit
   end
 
   def create
-    # binding.pry
+
         @hash_params = {
       localisation: lunch_params["localisation"],
       distance: lunch_params["distance"].to_i,
