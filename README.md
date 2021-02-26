@@ -67,6 +67,7 @@ This api will render the restaurants located around  designed city. The user mus
           *The name must be the name given in the preferences but not the email adress
     
 ## III. HOW TO
+
 ### Session
 #### Sign-up the API
   When you sin in, you **MUST** keep somewhere the authentication_token otherwise you won't be able to sign when creating new event. It will look like this *"authentication_token": "4xxvRjtXFUPPMubjs94t"*
