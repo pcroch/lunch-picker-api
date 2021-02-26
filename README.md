@@ -63,7 +63,7 @@ This api will render the restaurants located around  designed city. The user mus
   - Attendees:
 
           *List of people for the event. 
-          *The name must be the name given in the preferences but not the email adress
+          *The name must be the name given in the preferences but not the email address
     
 ## III. HOW TO
 
