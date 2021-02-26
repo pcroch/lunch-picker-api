@@ -21134,3 +21134,275 @@ Processing by Api::V1::LunchesController#index as JSON
 Completed 200 OK in 11ms (Views: 7.7ms | ActiveRecord: 0.8ms | Allocations: 7408)
 
 
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (22.8ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_test"[0m
+  [1m[35m (77.1ms)[0m  [1m[35mCREATE DATABASE "lunch_picker_api_test" ENCODING = 'unicode'[0m
+  [1m[35mSQL (0.2ms)[0m  [1m[35mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "lunch_preferences" CASCADE[0m
+  [1m[35m (6.2ms)[0m  [1m[35mCREATE TABLE "lunch_preferences" ("id" bigserial primary key, "lunch_id" bigint NOT NULL, "preference_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_lunch_id" ON "lunch_preferences"  ("lunch_id")[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_preference_id" ON "lunch_preferences"  ("preference_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "lunches" CASCADE[0m
+  [1m[35m (6.4ms)[0m  [1m[35mCREATE TABLE "lunches" ("id" bigserial primary key, "localisation" character varying, "distance" integer, "price" character varying[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE  INDEX  "index_lunches_on_user_id" ON "lunches"  ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "preferences" CASCADE[0m
+  [1m[35m (5.8ms)[0m  [1m[35mCREATE TABLE "preferences" ("id" bigserial primary key, "name" character varying, "taste" text[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE  INDEX  "index_preferences_on_user_id" ON "preferences"  ("user_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "restaurants" CASCADE[0m
+  [1m[35m (5.9ms)[0m  [1m[35mCREATE TABLE "restaurants" ("id" bigserial primary key, "restaurant_name" character varying, "restaurant_price" character varying, "restaurant_city" character varying, "restaurant_category" character varying, "restaurant_distance" integer, "lunch_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE  INDEX  "index_restaurants_on_lunch_id" ON "restaurants"  ("lunch_id")[0m
+  [1m[35m (0.1ms)[0m  [1m[35mDROP TABLE IF EXISTS "users" CASCADE[0m
+  [1m[35m (5.4ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, "authentication_token" character varying(30))[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_authentication_token" ON "users"  ("authentication_token")[0m
+  [1m[35m (2.7ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (2.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mALTER TABLE "lunch_preferences" ADD CONSTRAINT "fk_rails_903087d7dd"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "lunch_preferences" ADD CONSTRAINT "fk_rails_1158371461"
+FOREIGN KEY ("preference_id")
+  REFERENCES "preferences" ("id")
+[0m
+  [1m[35m (1.5ms)[0m  [1m[35mALTER TABLE "lunches" ADD CONSTRAINT "fk_rails_860867b609"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "preferences" ADD CONSTRAINT "fk_rails_87f1c9c7bd"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (1.4ms)[0m  [1m[35mALTER TABLE "restaurants" ADD CONSTRAINT "fk_rails_1d01fff5ba"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.9ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES (20210224134452)[0m
+  [1m[35m (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" (version) VALUES
+(20210223143541),
+(20210223145014),
+(20210223150010),
+(20210223150145),
+(20210223153506);
+
+[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-02-26 15:31:03.398035"], ["updated_at", "2021-02-26 15:31:03.398035"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Update (0.2ms)[0m  [1m[33mUPDATE "ar_internal_metadata" SET "value" = $1, "updated_at" = $2 WHERE "ar_internal_metadata"."key" = $3[0m  [["value", "test"], ["updated_at", "2021-02-26 15:31:03.405011"], ["key", "environment"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "schema_sha1"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "schema_sha1"], ["value", "2b764cac4a334fcf7309716d652b5ffac5461852"], ["created_at", "2021-02-26 15:31:03.410450"], ["updated_at", "2021-02-26 15:31:03.410450"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (35.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_development"[0m
+  [1m[35m (17.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_test"[0m
+  [1m[35m (70.6ms)[0m  [1m[35mCREATE DATABASE "lunch_picker_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (71.2ms)[0m  [1m[35mCREATE DATABASE "lunch_picker_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (7.4ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (5.5ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(107090900610847650)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20210223143541)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223143541"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePreferences (20210223145014)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.7ms)[0m  [1m[35mCREATE TABLE "preferences" ("id" bigserial primary key, "name" character varying, "taste" text[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_87f1c9c7bd"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_preferences_on_user_id" ON "preferences"  ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223145014"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLunches (20210223150010)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.1ms)[0m  [1m[35mCREATE TABLE "lunches" ("id" bigserial primary key, "localisation" character varying, "distance" integer, "price" character varying[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_860867b609"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE  INDEX  "index_lunches_on_user_id" ON "lunches"  ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223150010"]]
+  [1m[35m (1.0ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLunchPreferences (20210223150145)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.0ms)[0m  [1m[35mCREATE TABLE "lunch_preferences" ("id" bigserial primary key, "lunch_id" bigint NOT NULL, "preference_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_903087d7dd"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+, CONSTRAINT "fk_rails_1158371461"
+FOREIGN KEY ("preference_id")
+  REFERENCES "preferences" ("id")
+)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_lunch_id" ON "lunch_preferences"  ("lunch_id")[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_preference_id" ON "lunch_preferences"  ("preference_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223150145"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTokenToUsers (20210223153506)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.2ms)[0m  [1m[35mALTER TABLE "users" ADD "authentication_token" character varying(30)[0m
+  [1m[35m (2.3ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_authentication_token" ON "users"  ("authentication_token")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223153506"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateRestaurants (20210224134452)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (5.2ms)[0m  [1m[35mCREATE TABLE "restaurants" ("id" bigserial primary key, "restaurant_name" character varying, "restaurant_price" character varying, "restaurant_city" character varying, "restaurant_category" character varying, "restaurant_distance" integer, "lunch_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_1d01fff5ba"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+)[0m
+  [1m[35m (2.2ms)[0m  [1m[35mCREATE  INDEX  "index_restaurants_on_lunch_id" ON "restaurants"  ("lunch_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210224134452"]]
+  [1m[35m (1.2ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.3ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-02-26 15:52:06.164334"], ["updated_at", "2021-02-26 15:52:06.164334"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(107090900610847650)[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (5008.1ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_development"[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "environment"]]
+  [1m[35m (23.2ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_development"[0m
+  [1m[35m (17.7ms)[0m  [1m[35mDROP DATABASE IF EXISTS "lunch_picker_api_test"[0m
+  [1m[35m (80.9ms)[0m  [1m[35mCREATE DATABASE "lunch_picker_api_development" ENCODING = 'unicode'[0m
+  [1m[35m (73.3ms)[0m  [1m[35mCREATE DATABASE "lunch_picker_api_test" ENCODING = 'unicode'[0m
+  [1m[35m (7.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (6.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(107090900610847650)[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to DeviseCreateUsers (20210223143541)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (6.0ms)[0m  [1m[35mCREATE TABLE "users" ("id" bigserial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (1.9ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_email" ON "users"  ("email")[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users"  ("reset_password_token")[0m
+  [1m[36mprimary::SchemaMigration Create (0.2ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223143541"]]
+  [1m[35m (1.1ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreatePreferences (20210223145014)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.8ms)[0m  [1m[35mCREATE TABLE "preferences" ("id" bigserial primary key, "name" character varying, "taste" text[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_87f1c9c7bd"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_preferences_on_user_id" ON "preferences"  ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223145014"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLunches (20210223150010)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.3ms)[0m  [1m[35mCREATE TABLE "lunches" ("id" bigserial primary key, "localisation" character varying, "distance" integer, "price" character varying[] DEFAULT '{}', "user_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_860867b609"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+)[0m
+  [1m[35m (2.0ms)[0m  [1m[35mCREATE  INDEX  "index_lunches_on_user_id" ON "lunches"  ("user_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223150010"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateLunchPreferences (20210223150145)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (2.6ms)[0m  [1m[35mCREATE TABLE "lunch_preferences" ("id" bigserial primary key, "lunch_id" bigint NOT NULL, "preference_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_903087d7dd"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+, CONSTRAINT "fk_rails_1158371461"
+FOREIGN KEY ("preference_id")
+  REFERENCES "preferences" ("id")
+)[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_lunch_id" ON "lunch_preferences"  ("lunch_id")[0m
+  [1m[35m (1.8ms)[0m  [1m[35mCREATE  INDEX  "index_lunch_preferences_on_preference_id" ON "lunch_preferences"  ("preference_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223150145"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTokenToUsers (20210223153506)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mALTER TABLE "users" ADD "authentication_token" character varying(30)[0m
+  [1m[35m (2.1ms)[0m  [1m[35mCREATE UNIQUE INDEX  "index_users_on_authentication_token" ON "users"  ("authentication_token")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210223153506"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateRestaurants (20210224134452)
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (4.5ms)[0m  [1m[35mCREATE TABLE "restaurants" ("id" bigserial primary key, "restaurant_name" character varying, "restaurant_price" character varying, "restaurant_city" character varying, "restaurant_category" character varying, "restaurant_distance" integer, "lunch_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_1d01fff5ba"
+FOREIGN KEY ("lunch_id")
+  REFERENCES "lunches" ("id")
+)[0m
+  [1m[35m (1.7ms)[0m  [1m[35mCREATE  INDEX  "index_restaurants_on_lunch_id" ON "restaurants"  ("lunch_id")[0m
+  [1m[36mprimary::SchemaMigration Create (0.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20210224134452"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (0.2ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2021-02-26 15:58:30.315702"], ["updated_at", "2021-02-26 15:58:30.315702"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(107090900610847650)[0m
+  [1m[35m (0.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[36mUser Create (0.4ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "pierre@pierre.pierre"], ["encrypted_password", "$2a$12$iM4awCERTA4ZY/g3d4iNU.eymHaFfAldAYe75.PcWafeOlqLn8hNq"], ["created_at", "2021-02-26 15:58:30.600683"], ["updated_at", "2021-02-26 15:58:30.600683"], ["authentication_token", "KdapjiY6vz-sBkKmNieF"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "gilles@gilles.gilles"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = $1[0m  [["authentication_token", "zLeZQzzoRby13CyshiNQ"]]
+  [1m[36mUser Create (0.1ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "gilles@gilles.gilles"], ["encrypted_password", "$2a$12$FURlAdtndJxrTo6NiLT6V.j9Gr/xltAiihNAfWqoJVuBB6La5HqUi"], ["created_at", "2021-02-26 15:58:30.781215"], ["updated_at", "2021-02-26 15:58:30.781215"], ["authentication_token", "zLeZQzzoRby13CyshiNQ"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "vince@vince.vince"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = $1[0m  [["authentication_token", "TjQG7FVeH3WDnkRPy_9u"]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "vince@vince.vince"], ["encrypted_password", "$2a$12$vePbcOTEJrV4pE..i3vj7uu9NZUDWjUYi5x2EPEYOPbQr7n5nQYMO"], ["created_at", "2021-02-26 15:58:30.961586"], ["updated_at", "2021-02-26 15:58:30.961586"], ["authentication_token", "TjQG7FVeH3WDnkRPy_9u"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.2ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "sam@sam.sam"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = $1[0m  [["authentication_token", "_szUW_AEz5Pw6jxKT3Y-"]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "sam@sam.sam"], ["encrypted_password", "$2a$12$KF5U.5CYeitlnXmw0KJb.uctzGKS0yesvMegXopczHgsVB0Tz5jve"], ["created_at", "2021-02-26 15:58:31.142495"], ["updated_at", "2021-02-26 15:58:31.142495"], ["authentication_token", "_szUW_AEz5Pw6jxKT3Y-"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (1.8ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "Pierre"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.4ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Pierre"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-26 15:58:31.157284"], ["updated_at", "2021-02-26 15:58:31.157284"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "Gilles"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.3ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Gilles"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 2], ["created_at", "2021-02-26 15:58:31.162047"], ["updated_at", "2021-02-26 15:58:31.162047"]]
+  [1m[35m (0.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "Vince"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Vince"], ["taste", "{Italian,Japanese,Lebanese}"], ["user_id", 2], ["created_at", "2021-02-26 15:58:31.166642"], ["updated_at", "2021-02-26 15:58:31.166642"]]
+  [1m[35m (0.6ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 4], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "Sam"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "Sam"], ["taste", "{Belgian}"], ["user_id", 4], ["created_at", "2021-02-26 15:58:31.170830"], ["updated_at", "2021-02-26 15:58:31.170830"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.5ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1000], ["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-26 15:58:31.190311"], ["updated_at", "2021-02-26 15:58:31.190311"]]
+  [1m[35m (0.7ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1001], ["localisation", "Saint Gilles"], ["distance", 50], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-26 15:58:31.194271"], ["updated_at", "2021-02-26 15:58:31.194271"]]
+  [1m[35m (0.9ms)[0m  [1m[35mCOMMIT[0m

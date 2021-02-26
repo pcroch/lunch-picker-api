@@ -9,7 +9,7 @@ RSpec.describe 'Integration testing User Controller', type: :request do
     before do
       post 'http://localhost:3000/api/v1/sign_up', params: {
         "user": {
-          "email": '9@example.com',
+          "email": '123456@example.com',
           "password": 'password',
           "password_confirmation": 'password'
         }
@@ -30,7 +30,7 @@ RSpec.describe 'Integration testing User Controller', type: :request do
     before do
       post 'http://localhost:3000/api/v1/sign_up', params: {
         "user": {
-          "email": '9@example.com',
+          "email": '1234567@example.com',
           "password": 'password',
           "password_confirmation": ''
         }
