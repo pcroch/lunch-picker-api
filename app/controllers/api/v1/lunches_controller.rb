@@ -1,4 +1,3 @@
-require 'pry'
 class Api::V1::LunchesController < Api::V1::BaseController
 include Pundit
   acts_as_token_authentication_handler_for User, except: [ :index, :show ]
