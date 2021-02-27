@@ -4,7 +4,7 @@ module Api
   module V1
     class PreferencesController < Api::V1::BaseController
       # before_action :authenticate_user!, except: [:create, :index]
-            # include ActionController::Caching
+      # include ActionController::Caching
       acts_as_token_authentication_handler_for User, except: %i[index show]
       before_action :set_preference, only: %i[show update destroy]
       before_action :controller_validation, only: [:create]
@@ -60,7 +60,7 @@ module Api
       end
 
       def controller_validation
-        empty_attendees_array if preference_params['taste'].empty? || preference_params['taste'] == ['']
+        empty_taste_array if preference_params['taste'].empty? || preference_params['taste'] == ['']
       end
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class LunchesController < Api::V1::BaseController
@@ -11,10 +13,9 @@ module Api
       # caches_page :index, :show, :create
 
       def index
-    #         http_cache_forever(public: true) do
-       @lunches = policy_scope(Lunch)
-    # end
-
+        #         http_cache_forever(public: true) do
+        @lunches = policy_scope(Lunch)
+        # end
       end
 
       def show; end
@@ -35,7 +36,7 @@ module Api
           price: lunch_params['price'],
           taste: nil
         }
-# binding.pry
+        # binding.pry
         # create a range for price api
         price_min = lunch_params['price'].min
         price_max = lunch_params['price'].max
@@ -72,7 +73,7 @@ module Api
 
       def controller_validation
         # validate the distance strong params format
-           if (lunch_params['distance'].to_i.zero?) || (lunch_params['distance'].to_i > 39_999)
+        if lunch_params['distance'].to_i.zero? || (lunch_params['distance'].to_i > 39_999)
           invalid_distance
         # validate the price strong params format
         elsif lunch_params['price'].empty?
@@ -101,8 +102,6 @@ module Api
     end
   end
 end
-
-
 
 def matching_preferences
   # create an hash with the tastes preferences of everyone
@@ -172,7 +171,7 @@ def upper_limit
     i = 0
     # while i < 10
     while i < upper_limit
-# binding.pry
+      # binding.pry
       restaurant = Restaurant.new({
                                     'lunch_id' => @lunch.id,
                                     'restaurant_name' => @body['businesses'][i]['name'],

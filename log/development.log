@@ -29428,3 +29428,70 @@ Processing by Api::V1::LunchesController#create as JSON
 Completed 201 Created in 705ms (Views: 2.4ms | ActiveRecord: 30.0ms | Excon: 121.5ms | Allocations: 68174)
 
 
+Started POST "/api/v1/lunches" for ::1 at 2021-02-27 19:22:26 +0000
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>35000, "price"=>[1, 2, 3], "attendees"=>[""]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 32ms (Views: 0.1ms | ActiveRecord: 3.2ms | Allocations: 10684)
+
+
+Started POST "/api/v1/lunches" for ::1 at 2021-02-27 19:22:30 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>35000, "price"=>[1, 2, 3], "attendees"=>[]}}
+  [1m[36mUser Load (0.4ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 4ms (Views: 0.2ms | ActiveRecord: 0.4ms | Allocations: 2224)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-27 19:22:42 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"999", "taste"=>[]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 3ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 2022)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-27 19:22:59 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"999", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+  [1m[36mPreference Exists? (2.5ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "999"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+  [1m[35m (0.2ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+Completed 422 Unprocessable Entity in 34ms (Views: 0.2ms | ActiveRecord: 6.6ms | Allocations: 13724)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-27 19:25:36 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"999", "taste"=>[]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 4ms (Views: 0.5ms | ActiveRecord: 0.2ms | Allocations: 1912)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-27 19:26:22 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"999", "taste"=>[]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 10ms (Views: 0.1ms | ActiveRecord: 1.7ms | Allocations: 9602)
+
+
+Started POST "/api/v1/preferences" for ::1 at 2021-02-27 19:27:49 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"999", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "pierre@pierre.pierre"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "999"], ["LIMIT", 1]]
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  ↳ app/controllers/api/v1/preferences_controller.rb:32:in `create'
+Completed 422 Unprocessable Entity in 15ms (Views: 0.1ms | ActiveRecord: 2.9ms | Allocations: 12566)
+
+

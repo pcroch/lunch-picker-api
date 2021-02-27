@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 
 require 'spec_helper'
 # if lunches_spec is commented, the unit testing may fail bcse of this: (tbc)
@@ -15,14 +16,12 @@ RSpec.describe 'Unit testing' do
       preference.save
       expect(Preference.first).to eq(preference)
     end
-        it 'No duplicate user name' do
+    it 'No duplicate user name' do
       preference1 = Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian])
-            preference1.save
+      preference1.save
       preference2 = Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian])
       preference2.save
       expect(Preference.last).not_to eq(preference2)
     end
-
-end
-
+  end
 end

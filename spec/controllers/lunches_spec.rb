@@ -11,7 +11,6 @@ RSpec.describe 'Integration testing for the Lunch controller', type: :request do
 
     it 'should return list of events' do
       expect(response.body).not_to be_empty
-
     end
 
     it 'sould return status code 200' do
@@ -41,12 +40,12 @@ RSpec.describe 'Integration testing for the Lunch controller', type: :request do
 
   describe 'Create action' do
     let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
-        let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
+    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
 
     before do
       sample_body = { "lunch": {
         "localisation": 'Saint Gilles',
-        "distance": 35000,
+        "distance": 35_000,
         "price": [1, 4],
         "attendees": ['TestUser']
       } }

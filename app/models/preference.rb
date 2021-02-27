@@ -6,11 +6,8 @@ class Preference < ApplicationRecord
   has_many :lunch, through: :lunch_preferences
   validates :name, uniqueness: { case_sensitive: false, message: 'already in use' }, presence: true
 
-
-
-#     client = Faraday.new do |builder|
-#   builder.use :http_cache, store: Rails.cache
-#   builder.adapter Faraday.default_adapter
-# end
-
+  #     client = Faraday.new do |builder|
+  #   builder.use :http_cache, store: Rails.cache
+  #   builder.adapter Faraday.default_adapter
+  # end
 end

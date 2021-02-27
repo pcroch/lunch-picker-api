@@ -46,7 +46,7 @@ RSpec.describe 'Integration testing User Controller', type: :request do
     end
   end
 
-    describe 'Sign up with an existing email address' do
+  describe 'Sign up with an existing email address' do
     before do
       post 'http://localhost:3000/api/v1/sign_up', params: {
         "user": {

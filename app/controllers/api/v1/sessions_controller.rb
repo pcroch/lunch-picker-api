@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # # frozen_string_literal: true
 
 # module Api
@@ -41,4 +42,3 @@
 #     end
 #   end
 # end
-

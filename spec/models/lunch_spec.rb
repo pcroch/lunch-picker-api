@@ -20,7 +20,7 @@ RSpec.describe 'Unit testing' do
       lunch.save
       expect(Lunch.count).to eq(0)
     end
-        it 'Localisation must be a string' do
+    it 'Localisation must be a string' do
       lunch = Lunch.new(localisation: 1111, distance: 1000, price: [1, 4], user_id: '1')
       lunch.save
       expect(Lunch.count).to eq(0)
