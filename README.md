@@ -267,7 +267,9 @@ Coming soon
 
 ### C- Caching       
         
-There is cache only for two actions: Index & Show as there is no need for authentication for those actions.
+First, we have the presence of Querry cahcing; Query caching is a Rails feature that caches the result set returned by each query. If Rails encounters the same query again for that request, it will use the cached result set as opposed to running the query against the database again. (See Ruby Guide)
+
+Secondly, we have action caching.It will cache the result when an action is triggered. In our case, only for index, show and create.
 
 
 ### D- Error rendering description:
