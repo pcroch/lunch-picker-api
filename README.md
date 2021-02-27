@@ -52,7 +52,7 @@ This api will render the restaurants located around  designed city. The user mus
    
    - Distance:
       
-          * *MAXIMUM* distance in *meters* from the search location
+          *MAXIMUM distance in meters from the search location
           *if nothing is found between the maximum distance and the localisation, the distance be will be incremented by 10
           
           untill we will reach 10 restaurants or the distance wil be bigger than 40 km.
