@@ -14,4 +14,10 @@ class Lunch < ApplicationRecord
     sample = %w[1 2 3 4]
     errors.add(:price, 'range is invalid') unless price.all? { |w| sample.include?(w) }
   end
+
+#   client = Faraday.new do |builder|
+#   builder.use :http_cache, store: Rails.cache
+#   builder.adapter Faraday.default_adapter
+# end
+
 end

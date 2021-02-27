@@ -10,4 +10,10 @@ class Preference < ApplicationRecord
     sample = %w[Action Horror]
     errors.add(:taste, "doesn't match everywhere") unless taste.all? { |w| sample.include?(w) }
   end
+
+#     client = Faraday.new do |builder|
+#   builder.use :http_cache, store: Rails.cache
+#   builder.adapter Faraday.default_adapter
+# end
+
 end

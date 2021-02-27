@@ -3,12 +3,19 @@ module Api
   module V1
     class LunchesController < Api::V1::BaseController
       include Pundit
+      include ActionController::Caching
       acts_as_token_authentication_handler_for User, except: %i[index show]
       before_action :set_lunch, only: %i[show update destroy]
       before_action :controller_validation, only: [:create]
 
+      caches_action :index, :show, :create
+      caches_page :index, :show, :create
+
       def index
-        @lunches = policy_scope(Lunch)
+    #         http_cache_forever(public: true) do
+       @lunches = policy_scope(Lunch)
+    # end
+
       end
 
       def show; end
