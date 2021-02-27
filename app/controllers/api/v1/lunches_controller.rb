@@ -1,4 +1,3 @@
-require 'pry'
 module Api
   module V1
     class LunchesController < Api::V1::BaseController
