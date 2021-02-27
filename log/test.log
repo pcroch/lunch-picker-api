@@ -21986,3 +21986,493 @@ Completed 422 Unprocessable Entity in 5ms (Views: 0.1ms | ActiveRecord: 0.4ms | 
   [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
   [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
   [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (1.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (1.0ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 2.8ms | Allocations: 1024)
+Completed 200 OK in 7ms (Views: 1.5ms | ActiveRecord: 1.9ms | Allocations: 2941)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 0.4ms | Allocations: 134)
+Completed 200 OK in 1ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 598)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (2.8ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (1.5ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.554357"], ["updated_at", "2021-02-27 16:10:39.554357"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1], ["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.565279"], ["updated_at", "2021-02-27 16:10:39.565279"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/lunches/1" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.6ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 5.3ms | Allocations: 2318)
+Completed 200 OK in 8ms (Views: 3.9ms | ActiveRecord: 1.8ms | Allocations: 3225)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.583004"], ["updated_at", "2021-02-27 16:10:39.583004"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1], ["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.585036"], ["updated_at", "2021-02-27 16:10:39.585036"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/lunches/1" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 1.0ms | Allocations: 357)
+Completed 200 OK in 3ms (Views: 1.2ms | ActiveRecord: 0.3ms | Allocations: 953)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.597485"], ["updated_at", "2021-02-27 16:10:39.597485"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>"35000", "price"=>["1", "4"], "attendees"=>["TestUser"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 2ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 1853)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.609131"], ["updated_at", "2021-02-27 16:10:39.609131"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>"35000", "price"=>["1", "4"], "attendees"=>["TestUser"]}}
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 2ms (Views: 0.1ms | ActiveRecord: 0.1ms | Allocations: 762)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 1.2ms | Allocations: 243)
+Completed 200 OK in 3ms (Views: 1.3ms | ActiveRecord: 0.2ms | Allocations: 1120)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 0.4ms | Allocations: 132)
+Completed 200 OK in 2ms (Views: 1.1ms | ActiveRecord: 0.2ms | Allocations: 529)
+  [1m[35m (0.6ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("id", "name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["id", 1], ["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.644282"], ["updated_at", "2021-02-27 16:10:39.644282"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/preferences/1" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.9ms | Allocations: 160)
+Completed 200 OK in 3ms (Views: 1.1ms | ActiveRecord: 0.1ms | Allocations: 968)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("id", "name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["id", 1], ["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.657467"], ["updated_at", "2021-02-27 16:10:39.657467"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/preferences/1" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.8ms | Allocations: 94)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.2ms | Allocations: 621)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.8ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Started POST "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"TestUser", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.674809"], ["updated_at", "2021-02-27 16:10:39.674809"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.5ms | Allocations: 86)
+Completed 201 Created in 6ms (Views: 0.7ms | ActiveRecord: 0.7ms | Allocations: 1827)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.9ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Started POST "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"TestUser", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPreference Exists? (0.6ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.686271"], ["updated_at", "2021-02-27 16:10:39.686271"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.5ms | Allocations: 86)
+Completed 201 Created in 4ms (Views: 0.8ms | ActiveRecord: 1.1ms | Allocations: 1816)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:10:39 +0000
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.4ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.726092"], ["updated_at", "2021-02-27 16:10:39.726092"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.728857"], ["updated_at", "2021-02-27 16:10:39.728857"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" ORDER BY "lunches"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.0ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 0], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.733980"], ["updated_at", "2021-02-27 16:10:39.733980"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.1ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["user_id", 1], ["created_at", "2021-02-27 16:10:39.735845"], ["updated_at", "2021-02-27 16:10:39.735845"]]
+  [1m[35m (0.0ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT "ar_internal_metadata"."value" FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1[0m  [["key", "schema_sha1"]]
+  [1m[35m (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (0.1ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mUser Exists? (0.4ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:11:27 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.3ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 2.2ms | Allocations: 1024)
+Completed 200 OK in 6ms (Views: 1.5ms | ActiveRecord: 1.3ms | Allocations: 2941)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:11:27 +0000
+Processing by Api::V1::LunchesController#index as JSON
+  Rendering api/v1/lunches/index.json.jbuilder
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches"[0m
+  Rendered api/v1/lunches/index.json.jbuilder (Duration: 0.3ms | Allocations: 134)
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.1ms | Allocations: 598)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (2.3ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.4ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:27.991686"], ["updated_at", "2021-02-27 16:11:27.991686"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.3ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1], ["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:27.997822"], ["updated_at", "2021-02-27 16:11:27.997822"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/lunches/1" for 127.0.0.1 at 2021-02-27 16:11:27 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.2ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 3.3ms | Allocations: 2318)
+Completed 200 OK in 5ms (Views: 2.2ms | ActiveRecord: 1.3ms | Allocations: 3225)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.008605"], ["updated_at", "2021-02-27 16:11:28.008605"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("id", "localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING "id"[0m  [["id", 1], ["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.009964"], ["updated_at", "2021-02-27 16:11:28.009964"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/lunches/1" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::LunchesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mLunch Load (0.2ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" WHERE "lunches"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/lunches/show.json.jbuilder
+  [1m[36mRestaurant Load (0.1ms)[0m  [1m[34mSELECT "restaurants".* FROM "restaurants" WHERE "restaurants"."lunch_id" = $1[0m  [["lunch_id", 1]]
+  Rendered api/v1/lunches/show.json.jbuilder (Duration: 0.5ms | Allocations: 357)
+Completed 200 OK in 1ms (Views: 0.5ms | ActiveRecord: 0.3ms | Allocations: 953)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.1ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.017209"], ["updated_at", "2021-02-27 16:11:28.017209"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>"35000", "price"=>["1", "4"], "attendees"=>["TestUser"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 5ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 1853)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.031569"], ["updated_at", "2021-02-27 16:11:28.031569"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started POST "/api/v1/lunches" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::LunchesController#create as JSON
+  Parameters: {"lunch"=>{"localisation"=>"Saint Gilles", "distance"=>"35000", "price"=>["1", "4"], "attendees"=>["TestUser"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+Filter chain halted as :controller_validation rendered or redirected
+Completed 404 Not Found in 1ms (Views: 0.1ms | ActiveRecord: 0.2ms | Allocations: 762)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 1.1ms | Allocations: 243)
+Completed 200 OK in 3ms (Views: 1.1ms | ActiveRecord: 0.2ms | Allocations: 1120)
+  [1m[35m (0.3ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started GET "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#index as JSON
+  Rendering api/v1/preferences/index.json.jbuilder
+  [1m[36mPreference Load (0.1ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences"[0m
+  Rendered api/v1/preferences/index.json.jbuilder (Duration: 0.3ms | Allocations: 132)
+Completed 200 OK in 1ms (Views: 0.3ms | ActiveRecord: 0.1ms | Allocations: 529)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.3ms)[0m  [1m[32mINSERT INTO "preferences" ("id", "name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["id", 1], ["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.061304"], ["updated_at", "2021-02-27 16:11:28.061304"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/preferences/1" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.2ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.2ms | Allocations: 160)
+Completed 200 OK in 3ms (Views: 0.4ms | ActiveRecord: 0.2ms | Allocations: 968)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("id", "name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["id", 1], ["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.075340"], ["updated_at", "2021-02-27 16:11:28.075340"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Started GET "/api/v1/preferences/1" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#show as JSON
+  Parameters: {"id"=>"1"}
+  [1m[36mPreference Load (0.8ms)[0m  [1m[34mSELECT "preferences".* FROM "preferences" WHERE "preferences"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 94)
+Completed 200 OK in 2ms (Views: 1.0ms | ActiveRecord: 0.8ms | Allocations: 621)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Started POST "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"TestUser", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPreference Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.091521"], ["updated_at", "2021-02-27 16:11:28.091521"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.2ms | Allocations: 86)
+Completed 201 Created in 4ms (Views: 0.4ms | ActiveRecord: 1.0ms | Allocations: 1827)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Started POST "/api/v1/preferences" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::PreferencesController#create as JSON
+  Parameters: {"preference"=>{"name"=>"TestUser", "taste"=>["Italian", "Lebanese", "Japanese", "Belgian"]}}
+  [1m[36mUser Load (0.2ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."email" = $1 ORDER BY "users"."id" ASC LIMIT $2[0m  [["email", "test@test.test"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mPreference Exists? (0.3ms)[0m  [1m[34mSELECT 1 AS one FROM "preferences" WHERE LOWER("preferences"."name") = LOWER($1) LIMIT $2[0m  [["name", "TestUser"], ["LIMIT", 1]]
+  [1m[36mPreference Create (0.2ms)[0m  [1m[32mINSERT INTO "preferences" ("name", "taste", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["name", "TestUser"], ["taste", "{Italian,Lebanese,Japanese,Belgian}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.110375"], ["updated_at", "2021-02-27 16:11:28.110375"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  Rendering api/v1/preferences/show.json.jbuilder
+  Rendered api/v1/preferences/show.json.jbuilder (Duration: 0.1ms | Allocations: 86)
+Completed 201 Created in 12ms (Views: 0.3ms | ActiveRecord: 0.9ms | Allocations: 1823)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"123456@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "123456@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.3ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = $1[0m  [["authentication_token", "rFHmYEcSrhLmxhzXqydA"]]
+  [1m[36mUser Create (0.5ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "123456@example.com"], ["encrypted_password", "$2a$04$eb8RD3pFhKvx8/RPF4aa6uJyufNqMJ5htAckKKYLtqrkFuHdXgeIu"], ["created_at", "2021-02-27 16:11:28.118619"], ["updated_at", "2021-02-27 16:11:28.118619"], ["authentication_token", "rFHmYEcSrhLmxhzXqydA"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 4ms (Views: 0.2ms | ActiveRecord: 1.1ms | Allocations: 1699)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"123456@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "123456@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "users" WHERE "users"."authentication_token" = $1[0m  [["authentication_token", "scnFJRD_XKhpxMFnDN5G"]]
+  [1m[36mUser Create (0.2ms)[0m  [1m[32mINSERT INTO "users" ("email", "encrypted_password", "created_at", "updated_at", "authentication_token") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["email", "123456@example.com"], ["encrypted_password", "$2a$04$8uSDrJiu5v5i9A1DcfwoJubK9NwBYBDXHEAhC5oJdV5dhzA.cYTWS"], ["created_at", "2021-02-27 16:11:28.124102"], ["updated_at", "2021-02-27 16:11:28.124102"], ["authentication_token", "scnFJRD_XKhpxMFnDN5G"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+Completed 200 OK in 3ms (Views: 0.2ms | ActiveRecord: 0.6ms | Allocations: 1454)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"1234567@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "1234567@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1474)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+Started POST "/api/v1/sign_up" for 127.0.0.1 at 2021-02-27 16:11:28 +0000
+Processing by Api::V1::RegistrationsController#create as JSON
+  Parameters: {"user"=>{"email"=>"1234567@example.com", "password"=>"[FILTERED]", "password_confirmation"=>"[FILTERED]"}}
+  [1m[35m (0.1ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Exists? (0.2ms)[0m  [1m[34mSELECT 1 AS one FROM "users" WHERE "users"."email" = $1 LIMIT $2[0m  [["email", "1234567@example.com"], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+Completed 422 Unprocessable Entity in 2ms (Views: 0.1ms | ActiveRecord: 0.3ms | Allocations: 1376)
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.3ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.134810"], ["updated_at", "2021-02-27 16:11:28.134810"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.2ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.136863"], ["updated_at", "2021-02-27 16:11:28.136863"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[36mLunch Load (0.1ms)[0m  [1m[34mSELECT "lunches".* FROM "lunches" ORDER BY "lunches"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "price", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 0], ["price", "{1,4}"], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.142041"], ["updated_at", "2021-02-27 16:11:28.142041"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
+  [1m[35m (0.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.0ms)[0m  [1m[35mSAVEPOINT active_record_1[0m
+  [1m[36mUser Load (0.1ms)[0m  [1m[34mSELECT "users".* FROM "users" WHERE "users"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  [1m[36mLunch Create (0.2ms)[0m  [1m[32mINSERT INTO "lunches" ("localisation", "distance", "user_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["localisation", "Arlon"], ["distance", 1000], ["user_id", 1], ["created_at", "2021-02-27 16:11:28.144290"], ["updated_at", "2021-02-27 16:11:28.144290"]]
+  [1m[35m (0.1ms)[0m  [1m[35mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  [1m[34mSELECT COUNT(*) FROM "lunches"[0m
+  [1m[35m (0.1ms)[0m  [1m[31mROLLBACK[0m
