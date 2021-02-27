@@ -10,7 +10,7 @@ RSpec.describe 'Unit testing' do
       correct_preference.save
       expect(Preference.count).to eq(1)
     end
-    it 'saves itself' do
+    it 'Saves itself' do
       preference = Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian])
       preference.save
       expect(Preference.first).to eq(preference)

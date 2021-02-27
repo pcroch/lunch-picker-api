@@ -8,7 +8,7 @@ module Api
       before_action :controller_validation, only: [:create]
 
       caches_action :index, :show, :create
-      caches_page :index, :show, :create
+      # caches_page :index, :show, :create
 
       def index
     #         http_cache_forever(public: true) do
@@ -31,11 +31,11 @@ module Api
         #  act as a constructor
         @hash_params = {
           localisation: lunch_params['localisation'],
-          distance: lunch_params['distance'].to_i,
+          distance: lunch_params['distance'],
           price: lunch_params['price'],
           taste: nil
         }
-
+# binding.pry
         # create a range for price api
         price_min = lunch_params['price'].min
         price_max = lunch_params['price'].max
@@ -72,7 +72,7 @@ module Api
 
       def controller_validation
         # validate the distance strong params format
-        if (lunch_params['distance'].is_a? String) || (lunch_params['distance'] > 39_999)
+           if (lunch_params['distance'].to_i.zero?) || (lunch_params['distance'].to_i > 39_999)
           invalid_distance
         # validate the price strong params format
         elsif lunch_params['price'].empty?
@@ -132,6 +132,7 @@ def choice_count
 end
 
 def fetch_yelp(loc, dist, pr, cat = 'Restaurants')
+  # default country
   country = 'BE'
   url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
   api_key = 'dbOmGDOTOsbVmzXmFv-VBQTPbaumCoBaryQs1szFsDmNT9tw02WYflsQ7WgwgA2i79451YDsrFzo13zLqIYmocjCR4fup6IbnUZnaWISy8XddZawOuCsy5-xbSk1YHYx'
@@ -143,8 +144,11 @@ def fetch_yelp(loc, dist, pr, cat = 'Restaurants')
   else
     dist = dist.div(10)
 
+    # same url as above
     url = "https://api.yelp.com/v3/businesses/search?location=#{loc},#{country}&radius=#{dist}&price=#{pr}&categories=#{cat}"
+    # same response a s above
     response = Excon.get(url, headers: { 'Authorization' => "Bearer #{api_key}" })
+    # same body as above
     @body = JSON.parse(response.body)
 
   end
@@ -175,7 +179,7 @@ def upper_limit
                                     'restaurant_price' => @body['businesses'][i]['price'],
                                     'restaurant_city' => @body['businesses'][i]['location']['city'],
                                     'restaurant_category' => @body['businesses'][i]['categories'][0]['alias'],
-                                    'restaurant_distance' => @body['businesses'][i]['distance'].round()
+                                    'restaurant_distance' => @body['businesses'][i]['distance'].round
                                   })
       restaurant.save
       i += 1
