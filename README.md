@@ -48,12 +48,14 @@ This api will render the restaurants located around  designed city. The user mus
     
           *This string indicates the geographic area to be used when searching for businesses.
           *By default the city must be in Belgium
-          *It must be a string: "Arlon" or "Saint Gilles"
+          *It must be a string like: "Arlon" or "Saint Gilles"
    
    - Distance:
       
-          *Distance in meters from the search location
-          *Positive integer
+          *MAXIMUM distance in meters from the search location.
+          *if nothing is found between the maximum distance and the localisation, the distance be will be incremented by 10
+           untill we will reach 10 restaurants or the distance wil be bigger than 40 km.
+          *Positive integer between 0 and 39 999.
       
    - Price:
    
@@ -265,7 +267,9 @@ Coming soon
 
 ### C- Caching       
         
-There is cache only for two actions: Index & Show as there is no need for authentication for those actions.
+First, we have the presence of Querry cahcing; Query caching is a Rails feature that caches the result set returned by each query. If Rails encounters the same query again for that request, it will use the cached result set as opposed to running the query against the database again. (See Ruby Guide)
+
+Secondly, we have action caching.It will cache the result when an action is triggered. In our case, only for index, show and create.
 
 
 ### D- Error rendering description:
