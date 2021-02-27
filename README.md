@@ -48,14 +48,14 @@ This api will render the restaurants located around  designed city. The user mus
     
           *This string indicates the geographic area to be used when searching for businesses.
           *By default the city must be in Belgium
-          *It must be a string: "Arlon" or "Saint Gilles"
+          *It must be a string like: "Arlon" or "Saint Gilles"
    
    - Distance:
       
-          *MAXIMUM distance in meters from the search location
+          *MAXIMUM distance in meters from the search location.
           *if nothing is found between the maximum distance and the localisation, the distance be will be incremented by 10
            untill we will reach 10 restaurants or the distance wil be bigger than 40 km.
-          *Positive integer
+          *Positive integer between 1 and 39 999.
       
    - Price:
    
