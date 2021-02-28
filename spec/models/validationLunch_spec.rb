@@ -213,4 +213,26 @@ RSpec.describe 'Lunch Error Handeling:', type: :request do
       expect(response).to have_http_status(404)
     end
   end
+  describe 'Delete a lunch without the authorization' do
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
+    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
+    let!(:user2) { User.create(email: 'test2@test.test', password: 'testest', authentication_token: 'KdapjiYikjusBtghNieF', id: 2) }
+    let!(:pref2) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian French Belgian]) }
+    let!(:lunch) { Lunch.create(id: 1000, localisation: 'Arlon', distance: 1000, price: [1, 4], user_id: '1') }
+    let!(:lunch2) { Lunch.create(id: 1, localisation: 'Arlon', distance: 1000, price: [1, 4], user_id: '2') }
+    before do
+      delete 'https://api-lunch-picker.herokuapp.com/api/v1/lunches/1', headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+    end
+
+    error = { 'error' => 'Unauthorized LunchPolicy.destroy?' }
+
+    it 'returns an error message' do
+      json_response = JSON.parse(response.body)
+      expect(json_response).to eq(error)
+    end
+
+    it "returns status code 'Unauthorized' 401" do
+      expect(response).to have_http_status(401)
+    end
+  end
 end
