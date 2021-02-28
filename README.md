@@ -49,7 +49,7 @@ NB: To fetch the api, the user must first sign up to the api and choose his/her 
                }}
        
       This is an example of a  raw body request
-### Body variables:
+### Body request variables:
    - Localisation:
     
           *This string indicates the geographic area to be used when searching for businesses.
@@ -72,7 +72,14 @@ NB: To fetch the api, the user must first sign up to the api and choose his/her 
 
           *List of people for the event. 
           *The name must be the name given in the preferences but not the email address
+    ### Body response variables:
     
+   Basically, all the variables with the same name keep same format no matters if they are for the request of the response.
+   
+   What could change a bit would be variable for the chosen restaurants but they also keep the same logic as for the fetching. 
+   
+   I, on purpose, keep the same logic everywhere to help the understanding and the navigation within the api.
+      
 ## III. HOW TO
 
 ### Session
