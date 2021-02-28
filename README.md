@@ -319,6 +319,7 @@ The testing is located in the following folder: spec/controllers & spec/models
 ## IV. What next?
 
       - [ ] Adding new routes.
+      - [ ] automated testing in prod
 
 ### A- To do list
 
