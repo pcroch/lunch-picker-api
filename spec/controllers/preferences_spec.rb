@@ -63,4 +63,41 @@ RSpec.describe 'Integration testing for the Preference controller', type: :reque
       expect(response).to have_http_status(201)
     end
   end
+
+  describe 'Update action' do
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
+    let!(:preference) { Preference.create(user_id: 1, name: 'Pierre', taste: %w[Italian Lebanese Japanese Belgian], id: 1) }
+
+    before do
+      sample_body = { "preference": {
+        "name": 'TestUser',
+        "taste": %w[
+          French
+        ]
+      } }
+
+      patch 'http://localhost:3000/api/v1/preferences/1', params: sample_body, headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+    end
+    it 'should have the same name' do
+      json_response = JSON.parse(response.body)
+      expect(json_response['name']).to eq('TestUser')
+      expect(json_response['taste']).to eq(%w[French])
+    end
+
+    it 'should return status code created 200' do
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'Destroy action' do
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
+    let!(:preference) { Preference.create(user_id: 1, name: 'Pierre', taste: %w[Italian Lebanese Japanese Belgian], id: 2) }
+    before do
+      delete 'http://localhost:3000/api/v1/preferences/2', headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+    end
+
+    it 'should return status code created 204' do
+      expect(response).to have_http_status(204)
+    end
+  end
 end
