@@ -62,4 +62,17 @@ RSpec.describe 'Integration testing for the Lunch controller', type: :request do
       expect(response).to have_http_status(201)
     end
   end
+
+  describe 'Destroy action' do
+    let!(:user) { User.create(email: 'test@test.test', password: 'testest', authentication_token: 'KdapjiY6vz-sBkKmNieF', id: 1) }
+    let!(:pref) { Preference.create(user_id: 1, name: 'TestUser', taste: %w[Italian Lebanese Japanese Belgian]) }
+    let!(:lunch) { Lunch.create(id: 1000, localisation: 'Arlon', distance: 1000, price: [1, 4], user_id: '1') }
+    before do
+      delete 'http://localhost:3000/api/v1/lunches/1000', headers: { 'X-User-Email': user.email, 'X-User-Token': user.authentication_token }
+    end
+
+    it 'should return status code created 204' do
+      expect(response).to have_http_status(204)
+    end
+  end
 end
