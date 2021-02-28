@@ -284,6 +284,8 @@ Everything is made to be sure that the user insert the correct data into the api
 
 ## III. Testing description
 
+The testing is located in the following folder: spec/controllers & spec/models
+
 ### A- Run the test:
 
       Run: bundle exec rspec 
@@ -292,19 +294,25 @@ Everything is made to be sure that the user insert the correct data into the api
       It will launch the Unit testing and Integration testing
 
 ### B- Integration Testing Description: 
-      Some testing are already setup for the lubche controller and some models.
       
-      More information will coming soon
+      Some integration testing has been done for the launches and preferences controller. I tested the Index, Show and Create action.
+      I also test the Sign-up controller with three different test cases: The first one for a successful sign-up and the two others ones 
+      for an unsuccessful sign up because of a missing password and an already existing user.
       
 ### C- Unit Testing Description: 
-      Some testing are already setup for some controllers and some models.
-            
-      Coming soon
+
+      I test the data validation for the lunch and preference model. 
+      For the lunch model, it will test if a new object is saved correctly and if the data validation refused to save an object if the 
+      location is empty, a string or out of range.
+      For the preference model, it will test if a new object is saved correctly and if the data validation refused to save an object 
+      if the username is already existing to avoid duplicate.
 
 ## IV. What next?
 
+      - [ ] Adding new routes.
+
 ### A- To do list
 
-- [ ] N/A
+      - [ ] Cors
 
 
