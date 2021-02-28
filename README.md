@@ -167,10 +167,10 @@ When you sin in, you **MUST** keep somewhere the authentication_token otherwise 
 Fetch: 
    
     curl -i -X POST 
-        -H 'Content-Type    application/json'                                                           \
-        -H 'X-User-Email    test@example.come'                                                          \
-        -H 'X-User-Token    V1J27usvpS1dJN_ULYDT'                                                       \
-        -d '{ "preference": {"name": "TestUser","taste": ["Italian","Lebanese","Japanese","Belgian"]} }'\ 
+        -H 'Content-Type'    application/json'                                                            \
+        -H 'X-User-Email'    'test@example.come'                                                          \
+        -H 'X-User-Token'    'V1J27usvpS1dJN_ULYDT'                                                       \
+        -d '{ "preference": {"name": "TestUser","taste": ["Italian","Lebanese","Japanese","Belgian"]} }'  \ 
         https://api-lunch-picker.herokuapp.com/api/v1/preferences
 Render:   
          
