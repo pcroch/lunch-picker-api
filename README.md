@@ -278,7 +278,7 @@ Secondly, we have action caching. It will cache the result when an action is tri
 
 ### D- Error rendering description:
 
-Everything is made to be sure that the user is inserting the correct data into the api request.
+Everything is made to be sure that the user insert the correct data into the api request.
 
 ## III. Testing description
 
