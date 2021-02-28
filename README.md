@@ -92,7 +92,7 @@ When you sin in, you **MUST** keep somewhere the authentication_token otherwise 
   Fetch: 
   
       curl -i -X POST                                                                                                                     \
-            -H 'Content-Type      application/json'                                                                                       \
+            -h 'Content-Type      application/json'                                                                                       \
             -d '{"user": {"email":"test@example.com","password":"password", "password_confirmation":"password"}}'                         \
             https://api-lunch-picker.herokuapp.com//api/v1/sign_up
   Render: 
