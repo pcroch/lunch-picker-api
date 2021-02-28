@@ -82,6 +82,8 @@ NB: To fetch the api, the user must first sign up to the api and choose his/her 
       
 ## III. HOW TO
 
+I strongly recomment ot use [**Postman**](https://www.postman.com/downloads/) ot fetch the data to faciliate the user experience.
+
 ### Session
 #### Sign-up the API
 When you sin in, you **MUST** keep somewhere the authentication_token otherwise you won't be able to sign when creating a new event. It will look like this *"authentication_token": "4xxvRjtXFUPPMubjs94t"*
