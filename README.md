@@ -4,6 +4,8 @@
 
 This api will render the restaurants located around  the designated city. The user must choose the maximum distance around that city, the price range and the participant(s) to the lunch. Each of the participants has specific tastes that will influence the rendering of the api.
 
+NB: To fetch the api, the user must first sign up to the api and choose his/her preference(s).
+
 ## II. Technical description
 
 ### Current version: 
