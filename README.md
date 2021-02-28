@@ -2,7 +2,7 @@
 
 ## I. General description
 
-This api will render the restaurants located around  designed city. The user must chose the maximum distance around that city, the price range and the participant(s) to the lunch. Each of the participants has specific tastes that will influence the rendering of the api.
+This api will render the restaurants located around  the designated city. The user must choose the maximum distance around that city, the price range and the participant(s) to the lunch. Each of the participants has specific tastes that will influence the rendering of the api.
 
 ## II. Technical description
 
@@ -25,6 +25,10 @@ This api will render the restaurants located around  designed city. The user mus
         rails db:drop db:create db:migrate db:seed
         rails s
         
+    2*  sign-up to the api
+        create your preference and an user name
+        create a lunch with all the attendees
+        
 ### How to fetch in short (example):  
 
     1 * Headers:
@@ -32,7 +36,7 @@ This api will render the restaurants located around  designed city. The user mus
         X-User-Email    pierre@pierre.pierre
         X-User-Token    KdapjiY6vz-sBkKmNieF
         
-     This is a default user to demonstration. You can of course create your own user. Please see below.
+     This is a default user demonstration. You can of course create your own user. Please see below.
      
     2 * Body: 
             { "lunch": {
@@ -54,13 +58,13 @@ This api will render the restaurants located around  designed city. The user mus
       
           *MAXIMUM distance in meters from the search location.
           *if nothing is found between the maximum distance and the localisation, the distance be will be incremented by 10
-           untill we will reach 10 restaurants or the distance wil be bigger than 40 km.
+           until we reach 10 restaurants or the distance will be bigger than 40 km.
           *Positive integer between 0 and 39 999.
       
    - Price:
    
           *Pricing Range to filter the search result with: 1 = $, 2 = $$, 3 = $$$, 4 = $$$$. 
-          *Positive integer between 1 and 4. If the number are the same, it will be considered as Integer.
+          *Positive integer between 1 and 4. If the numbers are the same, it will be considered as Integer.
       
   - Attendees:
 
@@ -71,7 +75,8 @@ This api will render the restaurants located around  designed city. The user mus
 
 ### Session
 #### Sign-up the API
-  When you sin in, you **MUST** keep somewhere the authentication_token otherwise you won't be able to sign when creating new event. It will look like this *"authentication_token": "4xxvRjtXFUPPMubjs94t"*
+When you sin in, you **MUST** keep somewhere the authentication_token otherwise you won't be able to sign when creating a new event. It will look like this *"authentication_token": "4xxvRjtXFUPPMubjs94t"*
+
     
   Fetch: 
   
@@ -267,15 +272,13 @@ Coming soon
 
 ### C- Caching       
         
-First, we have the presence of Querry cahcing; Query caching is a Rails feature that caches the result set returned by each query. If Rails encounters the same query again for that request, it will use the cached result set as opposed to running the query against the database again. (See Ruby Guide)
+First, we have the presence of Query caching; Query caching is a Rails feature that caches the result set returned by each query. If Rails encounters the same query again for that request, it will use the cached result set as opposed to running the query against the database again. (See Ruby Guide)
 
-Secondly, we have action caching.It will cache the result when an action is triggered. In our case, only for index, show and create.
-
+Secondly, we have action caching. It will cache the result when an action is triggered. In our case, only for index, show and create.
 
 ### D- Error rendering description:
 
-Coming soon
-
+Everything is made to be sure that the user is inserting the correct data into the api request.
 
 ## III. Testing description
 
