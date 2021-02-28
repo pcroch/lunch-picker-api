@@ -82,7 +82,7 @@ NB: To fetch the api, the user must first sign up to the api and choose his/her 
       
 ## III. HOW TO
 
-I strongly recomment ot use [**Postman**](https://www.postman.com/downloads/) ot fetch the data to faciliate the user experience.
+I strongly recommend to use [**Postman**](https://www.postman.com/downloads/) to fetch the data to facilitate the user experience.
 
 ### Session
 #### Sign-up the API
