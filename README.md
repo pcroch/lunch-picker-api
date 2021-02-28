@@ -303,6 +303,6 @@ Everything is made to be sure that the user is inserting the correct data into t
 
 ### A- To do list
 
-see wiki
+- [ ] N/A
 
 
